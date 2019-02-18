@@ -16,7 +16,11 @@ namespace Covfefe
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TrayForm());
+            // ok, so you don't really need a form to do this -- you could use an ApplicationContext, but I just didn't feel like hand-coding all of the menu and resource stuff, so I used the form and the visual designers
+
+            // todo:  add a container
+            var facade = new SleepManagementFacade(new Windows7PowerManagementEngine());
+            Application.Run(new TrayForm(facade));
         }
     }
 }

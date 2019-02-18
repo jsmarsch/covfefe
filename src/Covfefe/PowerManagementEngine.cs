@@ -30,8 +30,8 @@ namespace Covfefe
             ES_DISPLAY_REQUIRED = 0x00000002,
             ES_SYSTEM_REQUIRED = 0x00000001
         }
-
     }
+
     // encapsulates API volatility related to sleep operations
     public class Windows7PowerManagementEngine: IPowerManagementEngine
     {

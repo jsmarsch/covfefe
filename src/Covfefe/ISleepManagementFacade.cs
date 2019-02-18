@@ -12,6 +12,7 @@ namespace Covfefe
         void DisableSleep();
         void ClearSleepOverrides();
         void DelaySleepOnBatteryStateChange(TimeSpan delay);
+        void DelaySleepOnLidClose(TimeSpan delay);
     }
 
     // orchestrates sleep operations
@@ -40,6 +41,11 @@ namespace Covfefe
         }
 
         public void DelaySleepOnBatteryStateChange(TimeSpan delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DelaySleepOnLidClose(TimeSpan delay)
         {
             throw new NotImplementedException();
         }

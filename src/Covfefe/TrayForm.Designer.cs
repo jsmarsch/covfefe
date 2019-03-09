@@ -44,7 +44,7 @@
             // 
             this.covfefeNotifyIcon.ContextMenuStrip = this.notifyContextMenu;
             this.covfefeNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("covfefeNotifyIcon.Icon")));
-            this.covfefeNotifyIcon.Text = "notifyIcon1";
+            this.covfefeNotifyIcon.Text = "Covfefe!";
             this.covfefeNotifyIcon.Visible = true;
             // 
             // notifyContextMenu
@@ -58,7 +58,7 @@
             this.notifyContextMenu.Name = "notifyContextMenu";
             this.notifyContextMenu.ShowCheckMargin = true;
             this.notifyContextMenu.ShowImageMargin = false;
-            this.notifyContextMenu.Size = new System.Drawing.Size(228, 136);
+            this.notifyContextMenu.Size = new System.Drawing.Size(228, 114);
             // 
             // stayAwakeToolStripMenuItem
             // 

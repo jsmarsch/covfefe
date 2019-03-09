@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPowerManagementEngine.cs" />
     <Compile Include="ISleepManagementFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,7 +57,8 @@
     <Compile Include="TrayForm.Designer.cs">
       <DependentUpon>TrayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PowerManagementEngine.cs" />
+    <Compile Include="WindowsPowerManagementApi.cs" />
+    <Compile Include="Windows7PowerManagementEngine.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

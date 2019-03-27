@@ -18,6 +18,7 @@ namespace Covfefe
         public void KeepMonitorsOn()
         {
             var result = WindowsPowerManagementApi.SetThreadExecutionState(
+                WindowsPowerManagementApi.EXECUTION_STATE.ES_SYSTEM_REQUIRED |
                 WindowsPowerManagementApi.EXECUTION_STATE.ES_DISPLAY_REQUIRED |
                 WindowsPowerManagementApi.EXECUTION_STATE.ES_CONTINUOUS);
             if (result == 0)

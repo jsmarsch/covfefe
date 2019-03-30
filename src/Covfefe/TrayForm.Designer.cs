@@ -45,6 +45,10 @@
             this.startOnLoginCheckbox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.defaultSleepModeComboBox = new System.Windows.Forms.ComboBox();
+            this.showBalloonTipsCheckbox = new System.Windows.Forms.CheckBox();
+            this.reminderCheckbox = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.notifyContextMenu.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -124,7 +128,7 @@
             this.titlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlePanel.Location = new System.Drawing.Point(0, 0);
             this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(357, 36);
+            this.titlePanel.Size = new System.Drawing.Size(420, 36);
             this.titlePanel.TabIndex = 1;
             // 
             // closeButton
@@ -135,7 +139,7 @@
             this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.closeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.closeButton.Location = new System.Drawing.Point(330, 0);
+            this.closeButton.Location = new System.Drawing.Point(393, 0);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(27, 36);
             this.closeButton.TabIndex = 1;
@@ -171,7 +175,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(25, 90);
+            this.label1.Location = new System.Drawing.Point(19, 131);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(178, 13);
             this.label1.TabIndex = 3;
@@ -183,17 +187,60 @@
             this.defaultSleepModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.defaultSleepModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.defaultSleepModeComboBox.FormattingEnabled = true;
-            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(209, 87);
+            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(203, 128);
             this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
             this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.defaultSleepModeComboBox.TabIndex = 4;
+            // 
+            // showBalloonTipsCheckbox
+            // 
+            this.showBalloonTipsCheckbox.AutoSize = true;
+            this.showBalloonTipsCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.showBalloonTipsCheckbox.Location = new System.Drawing.Point(25, 78);
+            this.showBalloonTipsCheckbox.Name = "showBalloonTipsCheckbox";
+            this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(221, 17);
+            this.showBalloonTipsCheckbox.TabIndex = 5;
+            this.showBalloonTipsCheckbox.Text = "Show a notification when I switch modes.";
+            this.showBalloonTipsCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // reminderCheckbox
+            // 
+            this.reminderCheckbox.AutoSize = true;
+            this.reminderCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.reminderCheckbox.Location = new System.Drawing.Point(25, 101);
+            this.reminderCheckbox.Name = "reminderCheckbox";
+            this.reminderCheckbox.Size = new System.Drawing.Size(233, 17);
+            this.reminderCheckbox.TabIndex = 5;
+            this.reminderCheckbox.Text = "Remind me if I interrupt sleep for longer than";
+            this.reminderCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(256, 101);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(68, 20);
+            this.textBox1.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.label2.Location = new System.Drawing.Point(330, 101);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "minutes.";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TrayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(357, 135);
+            this.ClientSize = new System.Drawing.Size(420, 167);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.reminderCheckbox);
+            this.Controls.Add(this.showBalloonTipsCheckbox);
             this.Controls.Add(this.defaultSleepModeComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.startOnLoginCheckbox);
@@ -229,5 +276,9 @@
         private System.Windows.Forms.CheckBox startOnLoginCheckbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox defaultSleepModeComboBox;
+        private System.Windows.Forms.CheckBox showBalloonTipsCheckbox;
+        private System.Windows.Forms.CheckBox reminderCheckbox;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

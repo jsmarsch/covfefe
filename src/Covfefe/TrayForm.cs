@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Covfefe.Properties;
 
 namespace Covfefe
 {
@@ -32,6 +33,7 @@ namespace Covfefe
         {
             // INotify is not implemented on the settings object, so these bindings are one-way
             startOnLoginCheckbox.DataBindings.Add(nameof(startOnLoginCheckbox.Checked), settings, nameof(settings.StartAtLogin));
+            showBalloonTipsCheckbox.DataBindings.Add(nameof(showBalloonTipsCheckbox.Checked), settings, nameof(settings.ShowBalloonTips));
             defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
             defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
         }
@@ -76,20 +78,22 @@ namespace Covfefe
                 case CovfefeSleepMode.Normal:
                     _sleepManagementFacade.ClearSleepOverrides();
                     normalOperationToolStripMenuItem.Checked = true;
+                    if(_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_Normal, Resources.BalloonText_Normal, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.StayAwake:
                     _sleepManagementFacade.DisableSleep();
                     stayAwakeToolStripMenuItem.Checked = true;
+                    if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_StayAwake, Resources.BalloonText_StayAwake, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.MonitorsOn:
                     _sleepManagementFacade.KeepMonitorsAwake();
                     keepMonitorsOnToolStripMenuItem.Checked = true;
+                    if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_KeepMonitorsOn, Resources.BalloonText_KeepMonitorsOn, ToolTipIcon.None);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sleepMode), sleepMode, null);
             }
         }
-
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BalloonText_KeepMonitorsOn" xml:space="preserve">
+    <value>Your Monitors will remain powered on, and your computer will not sleep.  To exit this mode, select "Normal Operation" in the context menu, or exit Covfefe.</value>
+  </data>
+  <data name="BalloonText_Normal" xml:space="preserve">
+    <value>Your computer will sleep and wake normally, as configured in your power management settings.  Use the context menu to enable "Stay Awake" or "Monitors On" Mode.</value>
+  </data>
+  <data name="BalloonText_StayAwake" xml:space="preserve">
+    <value>Your computer will not sleep.  To exit this mode, select "Normal Operation" in the context menu, or exit Covfefe.</value>
+  </data>
+  <data name="BalloonTitle_KeepMonitorsOn" xml:space="preserve">
+    <value>Keep Monitors On</value>
+  </data>
+  <data name="BalloonTitle_Normal" xml:space="preserve">
+    <value>Normal Operation</value>
+  </data>
+  <data name="BalloonTitle_StayAwake" xml:space="preserve">
+    <value>Stay Awake!</value>
+  </data>
 </root>

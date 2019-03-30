@@ -59,5 +59,59 @@ namespace Covfefe.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Monitors will remain powered on, and your computer will not sleep.  To exit this mode, select &quot;Normal Operation&quot; in the context menu, or exit Covfefe..
+        /// </summary>
+        internal static string BalloonText_KeepMonitorsOn {
+            get {
+                return ResourceManager.GetString("BalloonText_KeepMonitorsOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your computer will sleep and wake normally, as configured in your power management settings.  Use the context menu to enable &quot;Stay Awake&quot; or &quot;Monitors On&quot; Mode..
+        /// </summary>
+        internal static string BalloonText_Normal {
+            get {
+                return ResourceManager.GetString("BalloonText_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your computer will not sleep.  To exit this mode, select &quot;Normal Operation&quot; in the context menu, or exit Covfefe..
+        /// </summary>
+        internal static string BalloonText_StayAwake {
+            get {
+                return ResourceManager.GetString("BalloonText_StayAwake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep Monitors On.
+        /// </summary>
+        internal static string BalloonTitle_KeepMonitorsOn {
+            get {
+                return ResourceManager.GetString("BalloonTitle_KeepMonitorsOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal Operation.
+        /// </summary>
+        internal static string BalloonTitle_Normal {
+            get {
+                return ResourceManager.GetString("BalloonTitle_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stay Awake!.
+        /// </summary>
+        internal static string BalloonTitle_StayAwake {
+            get {
+                return ResourceManager.GetString("BalloonTitle_StayAwake", resourceCulture);
+            }
+        }
     }
 }

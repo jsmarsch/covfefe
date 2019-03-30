@@ -34,5 +34,17 @@ namespace Covfefe.Properties {
                 this["DefaultSleepMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public byte ShowBalloonTips {
+            get {
+                return ((byte)(this["ShowBalloonTips"]));
+            }
+            set {
+                this["ShowBalloonTips"] = value;
+            }
+        }
     }
 }

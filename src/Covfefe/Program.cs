@@ -31,7 +31,7 @@ namespace Covfefe
 
                 // todo:  add a container
                 var facade = new SleepManagementFacade(new Windows7PowerManagementEngine());
-                Application.Run(new TrayForm(facade));
+                Application.Run(new TrayForm(facade, new SettingsFacade()));
             }
             finally
             {

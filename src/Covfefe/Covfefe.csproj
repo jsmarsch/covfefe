@@ -51,10 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CovfefeSettings.cs" />
+    <Compile Include="CovfefeSleepMode.cs" />
     <Compile Include="IPowerManagementEngine.cs" />
+    <Compile Include="ISettingsFacade.cs" />
     <Compile Include="ISleepManagementFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsFacade.cs" />
     <Compile Include="SleepManagementFacade.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
@@ -64,6 +68,7 @@
     </Compile>
     <Compile Include="WindowsPowerManagementApi.cs" />
     <Compile Include="Windows7PowerManagementEngine.cs" />
+    <Compile Include="WindowsUIApi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

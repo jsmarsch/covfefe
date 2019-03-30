@@ -22,5 +22,17 @@ namespace Covfefe.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public string DefaultSleepMode {
+            get {
+                return ((string)(this["DefaultSleepMode"]));
+            }
+            set {
+                this["DefaultSleepMode"] = value;
+            }
+        }
     }
 }

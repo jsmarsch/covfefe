@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Covfefe.Properties;
 
@@ -17,6 +10,7 @@ namespace Covfefe
         private bool _isInitialLoad = true;
         private readonly ISettingsFacade _settingsFacade;
         private CovfefeSettings _settings;
+        private CovfefeSleepMode _sleepMode;
 
         public TrayForm(ISleepManagementFacade sleepManagementFacade, ISettingsFacade settingsFacade)
         {
@@ -31,11 +25,16 @@ namespace Covfefe
 
         private void ConfigureSettingsControls(CovfefeSettings settings)
         {
-            // INotify is not implemented on the settings object, so these bindings are one-way
             startOnLoginCheckbox.DataBindings.Add(nameof(startOnLoginCheckbox.Checked), settings, nameof(settings.StartAtLogin));
             showBalloonTipsCheckbox.DataBindings.Add(nameof(showBalloonTipsCheckbox.Checked), settings, nameof(settings.ShowBalloonTips));
+            reminderCheckbox.DataBindings.Add(nameof(reminderCheckbox.Checked), settings, nameof(settings.ShowReminder));
+            reminderTimeoutTextBox.DataBindings.Add(nameof(reminderTimeoutTextBox.Value), settings, nameof(settings.ReminderTimeoutMinutes));
+            reminderTimeoutTextBox.DataBindings.Add(nameof(reminderTimeoutTextBox.Enabled), reminderCheckbox, nameof(reminderCheckbox.Checked));
+
             defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
             defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
+            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60 * 1000;
+            reminderTimer.Start();
         }
 
         protected override void SetVisibleCore(bool value)
@@ -93,6 +92,7 @@ namespace Covfefe
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sleepMode), sleepMode, null);
             }
+            _sleepMode = sleepMode;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -114,7 +114,27 @@ namespace Covfefe
         private void closeButton_Click(object sender, EventArgs e)
         {
             _settingsFacade.SaveSettings(_settings);
+            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60 * 1000;
             Hide();
+        }
+
+        private void sleepReminderBalloonTip_Click(object s, EventArgs a) => SetSleepMode(CovfefeSleepMode.Normal); 
+
+        private void sleepReminderBalloon_Close(object s, EventArgs a)
+        {
+            covfefeNotifyIcon.BalloonTipClicked -= sleepReminderBalloonTip_Click;
+            covfefeNotifyIcon.BalloonTipClosed -= sleepReminderBalloon_Close;
+        }
+
+        private void reminderTimer_Tick(object sender, EventArgs e)
+        {
+            
+            if (_sleepMode == CovfefeSleepMode.Normal) return;
+
+            covfefeNotifyIcon.BalloonTipClicked += sleepReminderBalloonTip_Click;
+            covfefeNotifyIcon.BalloonTipClosed += sleepReminderBalloon_Close;
+
+            covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_SleepReminder, Resources.BalloonText_SleepReminder, ToolTipIcon.None);
         }
     }
 }

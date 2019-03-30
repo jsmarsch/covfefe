@@ -28,7 +28,10 @@ namespace Covfefe
                 var result = new CovfefeSettings();
                 if (Settings.Default.DefaultSleepMode != null)
                     result.DefaultSleepMode = (CovfefeSleepMode) Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
-                result.ShowBalloonTips = Convert.ToBoolean(Settings.Default.ShowBalloonTips);
+                result.ShowBalloonTips = Settings.Default.ShowBalloonTips;
+                result.ShowReminder = Settings.Default.ShowReminder;
+                result.ReminderTimeoutMinutes = Settings.Default.ReminderTimeoutMinutes;
+
                 using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, false))
                 {
                     result.StartAtLogin = runKey.GetValueNames().Contains(_appName);
@@ -46,7 +49,10 @@ namespace Covfefe
         public void SaveSettings(CovfefeSettings settings)
         {
             Settings.Default.DefaultSleepMode = settings.DefaultSleepMode.ToString();
-            Settings.Default.ShowBalloonTips = Convert.ToByte(settings.ShowBalloonTips);
+            Settings.Default.ShowBalloonTips = settings.ShowBalloonTips;
+            Settings.Default.ShowReminder = settings.ShowReminder;
+            Settings.Default.ReminderTimeoutMinutes = settings.ReminderTimeoutMinutes;
+
             Settings.Default.Save();
 
             using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, true))

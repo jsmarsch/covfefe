@@ -123,6 +123,9 @@
   <data name="BalloonText_Normal" xml:space="preserve">
     <value>Your computer will sleep and wake normally, as configured in your power management settings.  Use the context menu to enable "Stay Awake" or "Monitors On" Mode.</value>
   </data>
+  <data name="BalloonText_SleepReminder" xml:space="preserve">
+    <value>It's been a while since you have disabled sleep.  Did you forget?  You can click to here to return to Normal Mode.</value>
+  </data>
   <data name="BalloonText_StayAwake" xml:space="preserve">
     <value>Your computer will not sleep.  To exit this mode, select "Normal Operation" in the context menu, or exit Covfefe.</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="BalloonTitle_Normal" xml:space="preserve">
     <value>Normal Operation</value>
+  </data>
+  <data name="BalloonTitle_SleepReminder" xml:space="preserve">
+    <value>Re-enable Sleep?</value>
   </data>
   <data name="BalloonTitle_StayAwake" xml:space="preserve">
     <value>Stay Awake!</value>

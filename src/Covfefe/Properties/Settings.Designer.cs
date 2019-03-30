@@ -37,13 +37,37 @@ namespace Covfefe.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public byte ShowBalloonTips {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowBalloonTips {
             get {
-                return ((byte)(this["ShowBalloonTips"]));
+                return ((bool)(this["ShowBalloonTips"]));
             }
             set {
                 this["ShowBalloonTips"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowReminder {
+            get {
+                return ((bool)(this["ShowReminder"]));
+            }
+            set {
+                this["ShowReminder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public int ReminderTimeoutMinutes {
+            get {
+                return ((int)(this["ReminderTimeoutMinutes"]));
+            }
+            set {
+                this["ReminderTimeoutMinutes"] = value;
             }
         }
     }

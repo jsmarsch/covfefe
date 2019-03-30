@@ -79,6 +79,15 @@ namespace Covfefe.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It&apos;s been a while since you have disabled sleep.  Did you forget?  You can click to here to return to Normal Mode..
+        /// </summary>
+        internal static string BalloonText_SleepReminder {
+            get {
+                return ResourceManager.GetString("BalloonText_SleepReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your computer will not sleep.  To exit this mode, select &quot;Normal Operation&quot; in the context menu, or exit Covfefe..
         /// </summary>
         internal static string BalloonText_StayAwake {
@@ -102,6 +111,15 @@ namespace Covfefe.Properties {
         internal static string BalloonTitle_Normal {
             get {
                 return ResourceManager.GetString("BalloonTitle_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-enable Sleep?.
+        /// </summary>
+        internal static string BalloonTitle_SleepReminder {
+            get {
+                return ResourceManager.GetString("BalloonTitle_SleepReminder", resourceCulture);
             }
         }
         

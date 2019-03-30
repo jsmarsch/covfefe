@@ -47,10 +47,12 @@
             this.defaultSleepModeComboBox = new System.Windows.Forms.ComboBox();
             this.showBalloonTipsCheckbox = new System.Windows.Forms.CheckBox();
             this.reminderCheckbox = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.reminderTimeoutTextBox = new System.Windows.Forms.NumericUpDown();
+            this.reminderTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyContextMenu.SuspendLayout();
             this.titlePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reminderTimeoutTextBox)).BeginInit();
             this.SuspendLayout();
             // 
             // covfefeNotifyIcon
@@ -143,6 +145,7 @@
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(27, 36);
             this.closeButton.TabIndex = 1;
+            this.closeButton.TabStop = false;
             this.closeButton.Text = "X";
             this.closeButton.UseVisualStyleBackColor = false;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
@@ -155,7 +158,7 @@
             this.settingsLabel.Location = new System.Drawing.Point(0, 0);
             this.settingsLabel.Name = "settingsLabel";
             this.settingsLabel.Size = new System.Drawing.Size(324, 36);
-            this.settingsLabel.TabIndex = 0;
+            this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             this.settingsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.settingsLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.settingsLabel_MouseDown);
@@ -190,7 +193,7 @@
             this.defaultSleepModeComboBox.Location = new System.Drawing.Point(203, 128);
             this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
             this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
-            this.defaultSleepModeComboBox.TabIndex = 4;
+            this.defaultSleepModeComboBox.TabIndex = 6;
             // 
             // showBalloonTipsCheckbox
             // 
@@ -199,7 +202,7 @@
             this.showBalloonTipsCheckbox.Location = new System.Drawing.Point(25, 78);
             this.showBalloonTipsCheckbox.Name = "showBalloonTipsCheckbox";
             this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(221, 17);
-            this.showBalloonTipsCheckbox.TabIndex = 5;
+            this.showBalloonTipsCheckbox.TabIndex = 3;
             this.showBalloonTipsCheckbox.Text = "Show a notification when I switch modes.";
             this.showBalloonTipsCheckbox.UseVisualStyleBackColor = true;
             // 
@@ -209,17 +212,10 @@
             this.reminderCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.reminderCheckbox.Location = new System.Drawing.Point(25, 101);
             this.reminderCheckbox.Name = "reminderCheckbox";
-            this.reminderCheckbox.Size = new System.Drawing.Size(233, 17);
-            this.reminderCheckbox.TabIndex = 5;
-            this.reminderCheckbox.Text = "Remind me if I interrupt sleep for longer than";
+            this.reminderCheckbox.Size = new System.Drawing.Size(231, 17);
+            this.reminderCheckbox.TabIndex = 4;
+            this.reminderCheckbox.Text = "Remind me if I prevent sleep for longer than";
             this.reminderCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(256, 101);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(68, 20);
-            this.textBox1.TabIndex = 6;
             // 
             // label2
             // 
@@ -231,14 +227,40 @@
             this.label2.Text = "minutes.";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // reminderTimeoutTextBox
+            // 
+            this.reminderTimeoutTextBox.Location = new System.Drawing.Point(254, 100);
+            this.reminderTimeoutTextBox.Maximum = new decimal(new int[] {
+            35790,
+            0,
+            0,
+            0});
+            this.reminderTimeoutTextBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.reminderTimeoutTextBox.Name = "reminderTimeoutTextBox";
+            this.reminderTimeoutTextBox.Size = new System.Drawing.Size(70, 20);
+            this.reminderTimeoutTextBox.TabIndex = 8;
+            this.reminderTimeoutTextBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // reminderTimer
+            // 
+            this.reminderTimer.Tick += new System.EventHandler(this.reminderTimer_Tick);
+            // 
             // TrayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(420, 167);
+            this.Controls.Add(this.reminderTimeoutTextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.reminderCheckbox);
             this.Controls.Add(this.showBalloonTipsCheckbox);
             this.Controls.Add(this.defaultSleepModeComboBox);
@@ -254,6 +276,7 @@
             this.Text = "TrayForm";
             this.notifyContextMenu.ResumeLayout(false);
             this.titlePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.reminderTimeoutTextBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,7 +301,8 @@
         private System.Windows.Forms.ComboBox defaultSleepModeComboBox;
         private System.Windows.Forms.CheckBox showBalloonTipsCheckbox;
         private System.Windows.Forms.CheckBox reminderCheckbox;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown reminderTimeoutTextBox;
+        private System.Windows.Forms.Timer reminderTimer;
     }
 }

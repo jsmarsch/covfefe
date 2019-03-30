@@ -30,17 +30,15 @@ namespace Covfefe
 
         private void ConfigureSettingsControls(CovfefeSettings settings)
         {
+            // INotify is not implemented on the settings object, so these bindings are one-way
             startOnLoginCheckbox.DataBindings.Add(nameof(startOnLoginCheckbox.Checked), settings, nameof(settings.StartAtLogin));
             defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
             defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
-            //defaultSleepModeComboBox.SelectedItem =
-            //    defaultSleepModeComboBox.Items.Cast<KeyValuePair<string, CovfefeSleepMode>>()
-            //        .First(kv => kv.Value == settings.DefaultSleepMode);
         }
 
         protected override void SetVisibleCore(bool value)
         {
-            // ensure the form does not display on initial start
+            // ensure the form does not display on initial start, because we should just show the task icon
             base.SetVisibleCore(!_isInitialLoad && value);
             _isInitialLoad = false;
         }

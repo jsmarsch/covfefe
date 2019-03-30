@@ -19,6 +19,7 @@ namespace Covfefe
         static void Main()
         {
             // only allow 1 instance of this app to run at a time
+            // todo:  I should scope this to the login session, so that there can be multiple instances in multi-session
             SingleInstanceMutex = new Mutex(false, Assembly.GetEntryAssembly().FullName);
             if (!SingleInstanceMutex.WaitOne(0))
                 return;
@@ -27,11 +28,11 @@ namespace Covfefe
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                // ok, so you don't really need a form to do this -- you could use an ApplicationContext, but I just didn't feel like hand-coding all of the menu and resource stuff, so I used the form and the visual designers
 
-                // todo:  add a container
-                var facade = new SleepManagementFacade(new Windows7PowerManagementEngine());
-                Application.Run(new TrayForm(facade, new SettingsFacade()));
+                var sleepManagementFacadefacade = new SleepManagementFacade(new Windows7PowerManagementEngine());
+                var settingsFacade = new SettingsFacade();
+                var mainForm = new TrayForm(sleepManagementFacadefacade, settingsFacade);
+                Application.Run(mainForm);
             }
             finally
             {

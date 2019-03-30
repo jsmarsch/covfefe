@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,6 @@ namespace Covfefe
 {
     public class SettingsFacade : ISettingsFacade
     {
-        private const string DefaultSleepModeSettingName = "DefaultSleepMode";
         private const string RunKeyName = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
         private readonly string _exeName;
@@ -23,15 +23,24 @@ namespace Covfefe
 
         public CovfefeSettings GetSettings()
         {
-            var result = new CovfefeSettings();
-            if (Settings.Default.DefaultSleepMode != null)
-                result.DefaultSleepMode = (CovfefeSleepMode)Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
-
-            using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, false))
+            try
             {
-                result.StartAtLogin = runKey.GetValueNames().Contains(_appName);
+                var result = new CovfefeSettings();
+                if (Settings.Default.DefaultSleepMode != null)
+                    result.DefaultSleepMode =
+                        (CovfefeSleepMode) Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
+                using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, false))
+                {
+                    result.StartAtLogin = runKey.GetValueNames().Contains(_appName);
+                }
+                return result;
             }
-            return result;
+            catch
+            {
+                // intent: if the settings ever fail to load, just re-initialize them and return a default object, instead of crashing
+                Settings.Default.Reset();
+                return new CovfefeSettings();
+            }
         }
 
         public void SaveSettings(CovfefeSettings settings)

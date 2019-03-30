@@ -22,6 +22,20 @@ namespace Covfefe
             _sleepManagementFacade = sleepManagementFacade;
             _settingsFacade = settingsFacade;
             InitializeComponent();
+
+            _settings = _settingsFacade.GetSettings();
+            ConfigureSettingsControls(_settings);
+            SetSleepMode(_settings.DefaultSleepMode);
+        }
+
+        private void ConfigureSettingsControls(CovfefeSettings settings)
+        {
+            startOnLoginCheckbox.DataBindings.Add(nameof(startOnLoginCheckbox.Checked), settings, nameof(settings.StartAtLogin));
+            defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
+            defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
+            //defaultSleepModeComboBox.SelectedItem =
+            //    defaultSleepModeComboBox.Items.Cast<KeyValuePair<string, CovfefeSleepMode>>()
+            //        .First(kv => kv.Value == settings.DefaultSleepMode);
         }
 
         protected override void SetVisibleCore(bool value)
@@ -38,30 +52,46 @@ namespace Covfefe
 
         private void stayAwakeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetCheckedState((ToolStripMenuItem)sender);
-            _sleepManagementFacade.DisableSleep();
+            SetSleepMode(CovfefeSleepMode.StayAwake);
         }
 
         private void keepMonitorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetCheckedState((ToolStripMenuItem)sender);
-            _sleepManagementFacade.KeepMonitorsAwake();
+            SetSleepMode(CovfefeSleepMode.MonitorsOn);
         }
 
         private void normalOperationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetCheckedState((ToolStripMenuItem)sender);
-            _sleepManagementFacade.ClearSleepOverrides();
+            SetSleepMode(CovfefeSleepMode.Normal);
         }
 
-        private void SetCheckedState(ToolStripMenuItem checkedItem)
+        private void SetSleepMode(CovfefeSleepMode sleepMode)
         {
             foreach (object item in notifyContextMenu.Items)
             {
-                if (item is ToolStripMenuItem menuItem) 
-                    menuItem.Checked = menuItem == checkedItem;
+                if (item is ToolStripMenuItem menuItem)
+                    menuItem.Checked = false;
+            }
+
+            switch (sleepMode)
+            {
+                case CovfefeSleepMode.Normal:
+                    _sleepManagementFacade.ClearSleepOverrides();
+                    normalOperationToolStripMenuItem.Checked = true;
+                    break;
+                case CovfefeSleepMode.StayAwake:
+                    _sleepManagementFacade.DisableSleep();
+                    stayAwakeToolStripMenuItem.Checked = true;
+                    break;
+                case CovfefeSleepMode.MonitorsOn:
+                    _sleepManagementFacade.KeepMonitorsAwake();
+                    keepMonitorsOnToolStripMenuItem.Checked = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sleepMode), sleepMode, null);
             }
         }
+
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -83,12 +113,6 @@ namespace Covfefe
         {
             _settingsFacade.SaveSettings(_settings);
             Hide();
-        }
-
-        private void TrayForm_Load(object sender, EventArgs e)
-        {
-            _settings = _settingsFacade.GetSettings();
-            startOnLoginCheckbox.DataBindings.Add("Checked", _settings, "StartAtLogin");
         }
     }
 }

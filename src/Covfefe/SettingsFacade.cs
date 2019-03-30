@@ -25,7 +25,7 @@ namespace Covfefe
         {
             var result = new CovfefeSettings();
             if (Settings.Default.DefaultSleepMode != null)
-                result.SleepMode = (CovfefeSleepMode)Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
+                result.DefaultSleepMode = (CovfefeSleepMode)Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
 
             using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, false))
             {
@@ -36,7 +36,7 @@ namespace Covfefe
 
         public void SaveSettings(CovfefeSettings settings)
         {
-            Properties.Settings.Default.DefaultSleepMode = settings.SleepMode.ToString();
+            Properties.Settings.Default.DefaultSleepMode = settings.DefaultSleepMode.ToString();
             Properties.Settings.Default.Save();
 
             using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, true))

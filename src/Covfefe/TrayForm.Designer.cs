@@ -43,6 +43,8 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.settingsLabel = new System.Windows.Forms.Label();
             this.startOnLoginCheckbox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.defaultSleepModeComboBox = new System.Windows.Forms.ComboBox();
             this.notifyContextMenu.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -165,12 +167,35 @@
             this.startOnLoginCheckbox.Text = "Start Covfefe when I sign in";
             this.startOnLoginCheckbox.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.label1.Location = new System.Drawing.Point(25, 90);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(178, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "When Covfefe starts, use this mode:";
+            // 
+            // defaultSleepModeComboBox
+            // 
+            this.defaultSleepModeComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.defaultSleepModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.defaultSleepModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.defaultSleepModeComboBox.FormattingEnabled = true;
+            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(209, 87);
+            this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
+            this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.defaultSleepModeComboBox.TabIndex = 4;
+            // 
             // TrayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(357, 182);
+            this.ClientSize = new System.Drawing.Size(357, 135);
+            this.Controls.Add(this.defaultSleepModeComboBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.startOnLoginCheckbox);
             this.Controls.Add(this.titlePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -180,7 +205,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrayForm";
-            this.Load += new System.EventHandler(this.TrayForm_Load);
             this.notifyContextMenu.ResumeLayout(false);
             this.titlePanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -203,5 +227,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.CheckBox startOnLoginCheckbox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox defaultSleepModeComboBox;
     }
 }

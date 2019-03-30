@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlExtensions.cs" />
     <Compile Include="CovfefeSettings.cs" />
     <Compile Include="CovfefeSleepMode.cs" />
     <Compile Include="IPowerManagementEngine.cs" />

@@ -33,8 +33,7 @@ namespace Covfefe
 
             defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
             defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
-            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60 * 1000;
-            reminderTimer.Start();
+            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60000; // convert minutes to milliseconds
         }
 
         protected override void SetVisibleCore(bool value)
@@ -66,11 +65,7 @@ namespace Covfefe
 
         private void SetSleepMode(CovfefeSleepMode sleepMode)
         {
-            foreach (object item in notifyContextMenu.Items)
-            {
-                if (item is ToolStripMenuItem menuItem)
-                    menuItem.Checked = false;
-            }
+            notifyContextMenu.UncheckAllItems();
 
             switch (sleepMode)
             {
@@ -93,6 +88,10 @@ namespace Covfefe
                     throw new ArgumentOutOfRangeException(nameof(sleepMode), sleepMode, null);
             }
             _sleepMode = sleepMode;
+
+            // restart the reminder timer so that the reminder interval starts over
+            reminderTimer.Stop();
+            if (sleepMode != CovfefeSleepMode.Normal && _settings.ShowReminder) reminderTimer.Start();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -114,7 +113,8 @@ namespace Covfefe
         private void closeButton_Click(object sender, EventArgs e)
         {
             _settingsFacade.SaveSettings(_settings);
-            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60 * 1000;
+            reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60000; // convert minutes to milliseconds
+            reminderTimer.Enabled = _settings.ShowReminder && _sleepMode != CovfefeSleepMode.Normal;
             Hide();
         }
 
@@ -128,9 +128,6 @@ namespace Covfefe
 
         private void reminderTimer_Tick(object sender, EventArgs e)
         {
-            
-            if (_sleepMode == CovfefeSleepMode.Normal) return;
-
             covfefeNotifyIcon.BalloonTipClicked += sleepReminderBalloonTip_Click;
             covfefeNotifyIcon.BalloonTipClosed += sleepReminderBalloon_Close;
 

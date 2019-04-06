@@ -131,5 +131,25 @@ namespace Covfefe.Properties {
                 return ResourceManager.GetString("BalloonTitle_StayAwake", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon coffee_cup {
+            get {
+                object obj = ResourceManager.GetObject("coffee_cup", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon coffee_cup_cold {
+            get {
+                object obj = ResourceManager.GetObject("coffee_cup_cold", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

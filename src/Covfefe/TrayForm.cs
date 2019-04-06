@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Covfefe.Properties;
 
@@ -81,16 +83,19 @@ namespace Covfefe
                 case CovfefeSleepMode.Normal:
                     _sleepManagementFacade.ClearSleepOverrides();
                     normalOperationToolStripMenuItem.Checked = true;
-                    if(_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_Normal, Resources.BalloonText_Normal, ToolTipIcon.None);
+                    covfefeNotifyIcon.Icon = Resources.coffee_cup_cold;
+                    if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_Normal, Resources.BalloonText_Normal, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.StayAwake:
                     _sleepManagementFacade.DisableSleep();
                     stayAwakeToolStripMenuItem.Checked = true;
+                    covfefeNotifyIcon.Icon = Resources.coffee_cup;
                     if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_StayAwake, Resources.BalloonText_StayAwake, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.MonitorsOn:
                     _sleepManagementFacade.KeepMonitorsAwake();
                     keepMonitorsOnToolStripMenuItem.Checked = true;
+                    covfefeNotifyIcon.Icon = Resources.coffee_cup;
                     if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_KeepMonitorsOn, Resources.BalloonText_KeepMonitorsOn, ToolTipIcon.None);
                     break;
                 default:

@@ -60,7 +60,6 @@
             // covfefeNotifyIcon
             // 
             this.covfefeNotifyIcon.ContextMenuStrip = this.notifyContextMenu;
-            this.covfefeNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("covfefeNotifyIcon.Icon")));
             this.covfefeNotifyIcon.Text = "Covfefe!";
             this.covfefeNotifyIcon.Visible = true;
             this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.covfefeNotifyIcon_DoubleClick);

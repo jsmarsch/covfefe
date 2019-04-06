@@ -7,5 +7,7 @@
         public bool ShowReminder { get; set; }
         public int ReminderTimeoutMinutes { get; set; }
         public CovfefeSleepMode DefaultSleepMode { get; set; }
+        public bool DoubleClickToggleEnabled { get; set; }
+        public CovfefeSleepMode DoubleClickSleepMode { get; set; }
     }
 }

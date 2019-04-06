@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Covfefe.Properties;
 
@@ -33,6 +35,13 @@ namespace Covfefe
 
             defaultSleepModeComboBox.LoadFromEnum<CovfefeSleepMode>();
             defaultSleepModeComboBox.DataBindings.Add(nameof(defaultSleepModeComboBox.SelectedValue), settings, nameof(settings.DefaultSleepMode));
+
+            modeToggleCheckBox.DataBindings.Add(nameof(modeToggleCheckBox.Checked), settings, nameof(settings.DoubleClickToggleEnabled));
+
+            toggleModeComboBox.LoadFromEnum<CovfefeSleepMode>(mode => mode != CovfefeSleepMode.Normal);
+            toggleModeComboBox.DataBindings.Add(nameof(toggleModeComboBox.SelectedValue), settings, nameof(settings.DoubleClickSleepMode));
+            toggleModeComboBox.DataBindings.Add(nameof(toggleModeComboBox.Enabled), modeToggleCheckBox, nameof(modeToggleCheckBox.Checked));
+
             reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60000; // convert minutes to milliseconds
         }
 
@@ -132,6 +141,17 @@ namespace Covfefe
             covfefeNotifyIcon.BalloonTipClosed += sleepReminderBalloon_Close;
 
             covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_SleepReminder, Resources.BalloonText_SleepReminder, ToolTipIcon.None);
+        }
+
+        private void covfefeNotifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (!_settings.DoubleClickToggleEnabled)
+                return;
+
+            if(_sleepMode == CovfefeSleepMode.Normal)
+                SetSleepMode(_settings.DoubleClickSleepMode);
+            else
+                SetSleepMode(CovfefeSleepMode.Normal);
         }
     }
 }

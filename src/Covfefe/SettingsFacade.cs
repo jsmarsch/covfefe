@@ -31,6 +31,8 @@ namespace Covfefe
                 result.ShowBalloonTips = Settings.Default.ShowBalloonTips;
                 result.ShowReminder = Settings.Default.ShowReminder;
                 result.ReminderTimeoutMinutes = Settings.Default.ReminderTimeoutMinutes;
+                result.DoubleClickToggleEnabled = Settings.Default.DoubleClickToggleEnabled;
+                result.DoubleClickSleepMode = (CovfefeSleepMode) Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DoubleClickSleepMode);
 
                 using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, false))
                 {
@@ -52,7 +54,8 @@ namespace Covfefe
             Settings.Default.ShowBalloonTips = settings.ShowBalloonTips;
             Settings.Default.ShowReminder = settings.ShowReminder;
             Settings.Default.ReminderTimeoutMinutes = settings.ReminderTimeoutMinutes;
-
+            Settings.Default.DoubleClickToggleEnabled = settings.DoubleClickToggleEnabled;
+            Settings.Default.DoubleClickSleepMode = settings.DoubleClickSleepMode.ToString();
             Settings.Default.Save();
 
             using (var runKey = Registry.CurrentUser.OpenSubKey(RunKeyName, true))

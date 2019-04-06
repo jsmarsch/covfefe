@@ -50,6 +50,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.reminderTimeoutTextBox = new System.Windows.Forms.NumericUpDown();
             this.reminderTimer = new System.Windows.Forms.Timer(this.components);
+            this.toggleModeComboBox = new System.Windows.Forms.ComboBox();
+            this.modeToggleCheckBox = new System.Windows.Forms.CheckBox();
             this.notifyContextMenu.SuspendLayout();
             this.titlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reminderTimeoutTextBox)).BeginInit();
@@ -61,6 +63,7 @@
             this.covfefeNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("covfefeNotifyIcon.Icon")));
             this.covfefeNotifyIcon.Text = "Covfefe!";
             this.covfefeNotifyIcon.Visible = true;
+            this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.covfefeNotifyIcon_DoubleClick);
             // 
             // notifyContextMenu
             // 
@@ -178,7 +181,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(19, 131);
+            this.label1.Location = new System.Drawing.Point(22, 160);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(178, 13);
             this.label1.TabIndex = 3;
@@ -190,7 +193,7 @@
             this.defaultSleepModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.defaultSleepModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.defaultSleepModeComboBox.FormattingEnabled = true;
-            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(203, 128);
+            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(254, 157);
             this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
             this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.defaultSleepModeComboBox.TabIndex = 6;
@@ -253,16 +256,40 @@
             // 
             this.reminderTimer.Tick += new System.EventHandler(this.reminderTimer_Tick);
             // 
+            // toggleModeComboBox
+            // 
+            this.toggleModeComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.toggleModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toggleModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.toggleModeComboBox.FormattingEnabled = true;
+            this.toggleModeComboBox.Location = new System.Drawing.Point(254, 126);
+            this.toggleModeComboBox.Name = "toggleModeComboBox";
+            this.toggleModeComboBox.Size = new System.Drawing.Size(122, 21);
+            this.toggleModeComboBox.TabIndex = 6;
+            // 
+            // modeToggleCheckBox
+            // 
+            this.modeToggleCheckBox.AutoSize = true;
+            this.modeToggleCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.modeToggleCheckBox.Location = new System.Drawing.Point(25, 128);
+            this.modeToggleCheckBox.Name = "modeToggleCheckBox";
+            this.modeToggleCheckBox.Size = new System.Drawing.Size(225, 17);
+            this.modeToggleCheckBox.TabIndex = 4;
+            this.modeToggleCheckBox.Text = "On double-click, toggle Normal Mode and:";
+            this.modeToggleCheckBox.UseVisualStyleBackColor = true;
+            // 
             // TrayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(420, 167);
+            this.ClientSize = new System.Drawing.Size(420, 190);
             this.Controls.Add(this.reminderTimeoutTextBox);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.modeToggleCheckBox);
             this.Controls.Add(this.reminderCheckbox);
             this.Controls.Add(this.showBalloonTipsCheckbox);
+            this.Controls.Add(this.toggleModeComboBox);
             this.Controls.Add(this.defaultSleepModeComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.startOnLoginCheckbox);
@@ -304,5 +331,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown reminderTimeoutTextBox;
         private System.Windows.Forms.Timer reminderTimer;
+        private System.Windows.Forms.ComboBox toggleModeComboBox;
+        private System.Windows.Forms.CheckBox modeToggleCheckBox;
     }
 }

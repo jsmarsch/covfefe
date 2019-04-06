@@ -70,5 +70,29 @@ namespace Covfefe.Properties {
                 this["ReminderTimeoutMinutes"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("StayAwake")]
+        public string DoubleClickSleepMode {
+            get {
+                return ((string)(this["DoubleClickSleepMode"]));
+            }
+            set {
+                this["DoubleClickSleepMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DoubleClickToggleEnabled {
+            get {
+                return ((bool)(this["DoubleClickToggleEnabled"]));
+            }
+            set {
+                this["DoubleClickToggleEnabled"] = value;
+            }
+        }
     }
 }

@@ -15,10 +15,13 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="DoubleClickSleepMode" Type="System.String" Scope="User">
-      <Value Profile="(Default)">StayAwake</Value>
+      <Value Profile="(Default)">MonitorsOn</Value>
     </Setting>
     <Setting Name="DoubleClickToggleEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UpgradeNeeded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?define Property_ProductVersion = "2.0.0.0" ?>
-
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" 
     Name="Covfefe" 
     Language="1033" 
-    Version="$(var.Property_ProductVersion)" 
+    Version="!(bind.fileVersion.Covfefe.exe)"
     Manufacturer="jsm" 
     UpgradeCode="0a24d660-a0cd-483f-9f71-6b33d7f0eed1"
   >

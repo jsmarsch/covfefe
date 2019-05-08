@@ -15,6 +15,7 @@
     InstallerVersion="500" 
     Compressed="yes" 
     Description="Covfefe! Sleep Preventer"
+    InstallPrivileges="limited" 
   />
     
   <Media Id="1" Cabinet="Covfefe.cab" EmbedCab="yes"/>
@@ -34,18 +35,25 @@
       <Directory Id="AppDataFolder" Name="AppData">
         <Directory Id="AppRootDirectory" Name="Covfefe">
         </Directory>
+        <Directory Id="LocalAppDataFolder" Name="Local">
+          <Directory Id="AppSettingsDirectory" Name="Covfefe"></Directory>
+        </Directory>
       </Directory>
     </Directory>
 
+      
     <DirectoryRef Id="AppRootDirectory">
       <Component Id="Covfefe.exe" Guid="1FC747AA-852D-41DE-B948-8A4F6D201D2C" DiskId="1">
         <CreateFolder/>
+        <File Id="covfefe.exe" Source="..\Covfefe\bin\Release\Covfefe.exe" />
+        <File Id="covfefe.exe.config" Source="..\Covfefe\bin\Release\Covfefe.exe.config" />
         <RemoveFolder Id="RemoveAppRootDirectory" On="uninstall"/>
+        <RemoveFolder Id="AppSettingsDirectory" Directory="AppSettingsDirectory" On="uninstall"/>
         <RegistryKey Root="HKCU" Key="Software\jsm\Covfefe">
           <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
         </RegistryKey>
       </Component>
     </DirectoryRef>
-
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\License.rtf" />
 </Product>
 </Wix>

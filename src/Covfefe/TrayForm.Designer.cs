@@ -62,7 +62,7 @@
             this.covfefeNotifyIcon.ContextMenuStrip = this.notifyContextMenu;
             this.covfefeNotifyIcon.Text = "Covfefe!";
             this.covfefeNotifyIcon.Visible = true;
-            this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.covfefeNotifyIcon_DoubleClick);
+            this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.CovfefeNotifyIcon_DoubleClick);
             // 
             // notifyContextMenu
             // 
@@ -84,21 +84,21 @@
             this.stayAwakeToolStripMenuItem.Name = "stayAwakeToolStripMenuItem";
             this.stayAwakeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.stayAwakeToolStripMenuItem.Text = "Stay Awake!";
-            this.stayAwakeToolStripMenuItem.Click += new System.EventHandler(this.stayAwakeToolStripMenuItem_Click);
+            this.stayAwakeToolStripMenuItem.Click += new System.EventHandler(this.StayAwakeToolStripMenuItem_Click);
             // 
             // keepMonitorsOnToolStripMenuItem
             // 
             this.keepMonitorsOnToolStripMenuItem.Name = "keepMonitorsOnToolStripMenuItem";
             this.keepMonitorsOnToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.keepMonitorsOnToolStripMenuItem.Text = "Keep Monitors On";
-            this.keepMonitorsOnToolStripMenuItem.Click += new System.EventHandler(this.keepMonitorsToolStripMenuItem_Click);
+            this.keepMonitorsOnToolStripMenuItem.Click += new System.EventHandler(this.KeepMonitorsToolStripMenuItem_Click);
             // 
             // normalOperationToolStripMenuItem
             // 
             this.normalOperationToolStripMenuItem.Name = "normalOperationToolStripMenuItem";
             this.normalOperationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.normalOperationToolStripMenuItem.Text = "Normal Operation";
-            this.normalOperationToolStripMenuItem.Click += new System.EventHandler(this.normalOperationToolStripMenuItem_Click);
+            this.normalOperationToolStripMenuItem.Click += new System.EventHandler(this.NormalOperationToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -110,7 +110,7 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -150,12 +150,12 @@
             this.closeButton.TabStop = false;
             this.closeButton.Text = "X";
             this.closeButton.UseVisualStyleBackColor = false;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.closeButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // settingsLabel
             // 
             this.settingsLabel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.settingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingsLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.settingsLabel.Location = new System.Drawing.Point(0, 0);
             this.settingsLabel.Name = "settingsLabel";
@@ -163,7 +163,7 @@
             this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             this.settingsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.settingsLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.settingsLabel_MouseDown);
+            this.settingsLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SettingsLabel_MouseDown);
             // 
             // startOnLoginCheckbox
             // 
@@ -171,18 +171,18 @@
             this.startOnLoginCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.startOnLoginCheckbox.Location = new System.Drawing.Point(25, 54);
             this.startOnLoginCheckbox.Name = "startOnLoginCheckbox";
-            this.startOnLoginCheckbox.Size = new System.Drawing.Size(156, 17);
+            this.startOnLoginCheckbox.Size = new System.Drawing.Size(142, 17);
             this.startOnLoginCheckbox.TabIndex = 2;
-            this.startOnLoginCheckbox.Text = "Start Covfefe when I sign in";
+            this.startOnLoginCheckbox.Text = "Start Covfefe on login.";
             this.startOnLoginCheckbox.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(22, 160);
+            this.label1.Location = new System.Drawing.Point(22, 156);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(178, 13);
+            this.label1.Size = new System.Drawing.Size(192, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "When Covfefe starts, use this mode:";
             // 
@@ -192,46 +192,46 @@
             this.defaultSleepModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.defaultSleepModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.defaultSleepModeComboBox.FormattingEnabled = true;
-            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(254, 157);
+            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(283, 152);
             this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
-            this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.defaultSleepModeComboBox.Size = new System.Drawing.Size(119, 21);
             this.defaultSleepModeComboBox.TabIndex = 6;
             // 
             // showBalloonTipsCheckbox
             // 
             this.showBalloonTipsCheckbox.AutoSize = true;
             this.showBalloonTipsCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.showBalloonTipsCheckbox.Location = new System.Drawing.Point(25, 78);
+            this.showBalloonTipsCheckbox.Location = new System.Drawing.Point(25, 79);
             this.showBalloonTipsCheckbox.Name = "showBalloonTipsCheckbox";
-            this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(221, 17);
+            this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(252, 17);
             this.showBalloonTipsCheckbox.TabIndex = 3;
-            this.showBalloonTipsCheckbox.Text = "Show a notification when I switch modes.";
+            this.showBalloonTipsCheckbox.Text = "Show a notification when switching modes.";
             this.showBalloonTipsCheckbox.UseVisualStyleBackColor = true;
             // 
             // reminderCheckbox
             // 
             this.reminderCheckbox.AutoSize = true;
             this.reminderCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.reminderCheckbox.Location = new System.Drawing.Point(25, 101);
+            this.reminderCheckbox.Location = new System.Drawing.Point(25, 104);
             this.reminderCheckbox.Name = "reminderCheckbox";
-            this.reminderCheckbox.Size = new System.Drawing.Size(231, 17);
+            this.reminderCheckbox.Size = new System.Drawing.Size(258, 17);
             this.reminderCheckbox.TabIndex = 4;
-            this.reminderCheckbox.Text = "Remind me if I prevent sleep for longer than";
+            this.reminderCheckbox.Text = "Show reminder if Covfefe is active more than:";
             this.reminderCheckbox.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label2.Location = new System.Drawing.Point(330, 101);
+            this.label2.Location = new System.Drawing.Point(347, 101);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 17);
+            this.label2.Size = new System.Drawing.Size(57, 17);
             this.label2.TabIndex = 7;
             this.label2.Text = "minutes.";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // reminderTimeoutTextBox
             // 
-            this.reminderTimeoutTextBox.Location = new System.Drawing.Point(254, 100);
+            this.reminderTimeoutTextBox.Location = new System.Drawing.Point(283, 101);
             this.reminderTimeoutTextBox.Maximum = new decimal(new int[] {
             35790,
             0,
@@ -243,7 +243,7 @@
             0,
             0});
             this.reminderTimeoutTextBox.Name = "reminderTimeoutTextBox";
-            this.reminderTimeoutTextBox.Size = new System.Drawing.Size(70, 20);
+            this.reminderTimeoutTextBox.Size = new System.Drawing.Size(55, 22);
             this.reminderTimeoutTextBox.TabIndex = 8;
             this.reminderTimeoutTextBox.Value = new decimal(new int[] {
             1,
@@ -253,7 +253,7 @@
             // 
             // reminderTimer
             // 
-            this.reminderTimer.Tick += new System.EventHandler(this.reminderTimer_Tick);
+            this.reminderTimer.Tick += new System.EventHandler(this.ReminderTimer_Tick);
             // 
             // toggleModeComboBox
             // 
@@ -261,18 +261,18 @@
             this.toggleModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toggleModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.toggleModeComboBox.FormattingEnabled = true;
-            this.toggleModeComboBox.Location = new System.Drawing.Point(254, 126);
+            this.toggleModeComboBox.Location = new System.Drawing.Point(283, 127);
             this.toggleModeComboBox.Name = "toggleModeComboBox";
-            this.toggleModeComboBox.Size = new System.Drawing.Size(122, 21);
+            this.toggleModeComboBox.Size = new System.Drawing.Size(119, 21);
             this.toggleModeComboBox.TabIndex = 6;
             // 
             // modeToggleCheckBox
             // 
             this.modeToggleCheckBox.AutoSize = true;
             this.modeToggleCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.modeToggleCheckBox.Location = new System.Drawing.Point(25, 128);
+            this.modeToggleCheckBox.Location = new System.Drawing.Point(25, 129);
             this.modeToggleCheckBox.Name = "modeToggleCheckBox";
-            this.modeToggleCheckBox.Size = new System.Drawing.Size(225, 17);
+            this.modeToggleCheckBox.Size = new System.Drawing.Size(247, 17);
             this.modeToggleCheckBox.TabIndex = 4;
             this.modeToggleCheckBox.Text = "On double-click, toggle Normal Mode and:";
             this.modeToggleCheckBox.UseVisualStyleBackColor = true;
@@ -282,7 +282,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(420, 190);
+            this.ClientSize = new System.Drawing.Size(420, 204);
             this.Controls.Add(this.reminderTimeoutTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.modeToggleCheckBox);
@@ -293,6 +293,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.startOnLoginCheckbox);
             this.Controls.Add(this.titlePanel);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TrayForm";

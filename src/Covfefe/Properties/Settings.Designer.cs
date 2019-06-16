@@ -73,7 +73,7 @@ namespace Covfefe.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("StayAwake")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MonitorsOn")]
         public string DoubleClickSleepMode {
             get {
                 return ((string)(this["DoubleClickSleepMode"]));
@@ -85,13 +85,25 @@ namespace Covfefe.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool DoubleClickToggleEnabled {
             get {
                 return ((bool)(this["DoubleClickToggleEnabled"]));
             }
             set {
                 this["DoubleClickToggleEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpgradeNeeded {
+            get {
+                return ((bool)(this["UpgradeNeeded"]));
+            }
+            set {
+                this["UpgradeNeeded"] = value;
             }
         }
     }

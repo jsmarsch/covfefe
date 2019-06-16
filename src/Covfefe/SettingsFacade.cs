@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -25,6 +24,9 @@ namespace Covfefe
         {
             try
             {
+                if (Settings.Default.UpgradeNeeded)
+                    UpgradeSettings();
+
                 var result = new CovfefeSettings();
                 if (Settings.Default.DefaultSleepMode != null)
                     result.DefaultSleepMode = (CovfefeSleepMode) Enum.Parse(typeof(CovfefeSleepMode), Settings.Default.DefaultSleepMode);
@@ -69,6 +71,17 @@ namespace Covfefe
                     runKey.DeleteValue(_appName, false);
                 }
             }
+        }
+
+        /// <summary>
+        /// If necessary, upgrade settings so that we don't lose our settings every time the version of the application changes
+        /// </summary>
+        private void UpgradeSettings()
+        {
+            Settings.Default.Upgrade();
+            Settings.Default.UpgradeNeeded = false;
+            Settings.Default.Save();
+            Settings.Default.Reload();
         }
     }
 }

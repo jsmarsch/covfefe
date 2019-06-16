@@ -171,16 +171,16 @@
             this.startOnLoginCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.startOnLoginCheckbox.Location = new System.Drawing.Point(25, 54);
             this.startOnLoginCheckbox.Name = "startOnLoginCheckbox";
-            this.startOnLoginCheckbox.Size = new System.Drawing.Size(156, 17);
+            this.startOnLoginCheckbox.Size = new System.Drawing.Size(131, 17);
             this.startOnLoginCheckbox.TabIndex = 2;
-            this.startOnLoginCheckbox.Text = "Start Covfefe when I sign in";
+            this.startOnLoginCheckbox.Text = "Start Covfefe on login.";
             this.startOnLoginCheckbox.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(22, 160);
+            this.label1.Location = new System.Drawing.Point(22, 156);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(178, 13);
             this.label1.TabIndex = 3;
@@ -192,7 +192,7 @@
             this.defaultSleepModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.defaultSleepModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.defaultSleepModeComboBox.FormattingEnabled = true;
-            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(254, 157);
+            this.defaultSleepModeComboBox.Location = new System.Drawing.Point(265, 152);
             this.defaultSleepModeComboBox.Name = "defaultSleepModeComboBox";
             this.defaultSleepModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.defaultSleepModeComboBox.TabIndex = 6;
@@ -203,9 +203,9 @@
             this.showBalloonTipsCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.showBalloonTipsCheckbox.Location = new System.Drawing.Point(25, 78);
             this.showBalloonTipsCheckbox.Name = "showBalloonTipsCheckbox";
-            this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(221, 17);
+            this.showBalloonTipsCheckbox.Size = new System.Drawing.Size(229, 17);
             this.showBalloonTipsCheckbox.TabIndex = 3;
-            this.showBalloonTipsCheckbox.Text = "Show a notification when I switch modes.";
+            this.showBalloonTipsCheckbox.Text = "Show a notification when switching modes.";
             this.showBalloonTipsCheckbox.UseVisualStyleBackColor = true;
             // 
             // reminderCheckbox
@@ -214,15 +214,15 @@
             this.reminderCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.reminderCheckbox.Location = new System.Drawing.Point(25, 101);
             this.reminderCheckbox.Name = "reminderCheckbox";
-            this.reminderCheckbox.Size = new System.Drawing.Size(231, 17);
+            this.reminderCheckbox.Size = new System.Drawing.Size(239, 17);
             this.reminderCheckbox.TabIndex = 4;
-            this.reminderCheckbox.Text = "Remind me if I prevent sleep for longer than";
+            this.reminderCheckbox.Text = "Show reminder if Covfefe is active more than:";
             this.reminderCheckbox.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label2.Location = new System.Drawing.Point(330, 101);
+            this.label2.Location = new System.Drawing.Point(340, 101);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 17);
             this.label2.TabIndex = 7;
@@ -231,7 +231,7 @@
             // 
             // reminderTimeoutTextBox
             // 
-            this.reminderTimeoutTextBox.Location = new System.Drawing.Point(254, 100);
+            this.reminderTimeoutTextBox.Location = new System.Drawing.Point(264, 100);
             this.reminderTimeoutTextBox.Maximum = new decimal(new int[] {
             35790,
             0,
@@ -261,7 +261,7 @@
             this.toggleModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toggleModeComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
             this.toggleModeComboBox.FormattingEnabled = true;
-            this.toggleModeComboBox.Location = new System.Drawing.Point(254, 126);
+            this.toggleModeComboBox.Location = new System.Drawing.Point(264, 126);
             this.toggleModeComboBox.Name = "toggleModeComboBox";
             this.toggleModeComboBox.Size = new System.Drawing.Size(122, 21);
             this.toggleModeComboBox.TabIndex = 6;

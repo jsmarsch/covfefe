@@ -10,8 +10,23 @@ namespace Covfefe
 {
     public static class ControlExtensions
     {
+        /// <summary>
+        /// Load a combo box with the values of the given enum.  
+        /// </summary>
+        /// <typeparam name="TEnumType">
+        ///     The Enum type.  If the enum has a <see cref="DescriptionAttribute"/>, then it will be used as the DisplayMember of the combo.  
+        ///     If not, the enum value will be the DisplayMamber.  In either case, the enum value will be the ValueMember of the combo.
+        /// </typeparam>
         public static void LoadFromEnum<TEnumType>(this ComboBox comboBox) => comboBox.LoadFromEnum<TEnumType>(v => true);
 
+        /// <summary>
+        /// Load a combo box with the values of the given enum.  
+        /// </summary>
+        /// <typeparam name="TEnumType">
+        ///     The Enum type.  If the enum has a <see cref="DescriptionAttribute"/>, then it will be used as the DisplayMember of the combo.  
+        ///     If not, the enum value will be the DisplayMamber.  In either case, the enum value will be the ValueMember of the combo.
+        /// </typeparam>
+        /// <param name="enumValueFilterPredicate">A predicate that can be used to exclude enum members.  Return true if the member is to be included in the combo box.</param>
         public static void LoadFromEnum<TEnumType>(this ComboBox comboBox, Predicate<TEnumType> enumValueFilterPredicate)
         {
             comboBox.Items.Clear();

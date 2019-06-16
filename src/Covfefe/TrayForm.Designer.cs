@@ -62,7 +62,7 @@
             this.covfefeNotifyIcon.ContextMenuStrip = this.notifyContextMenu;
             this.covfefeNotifyIcon.Text = "Covfefe!";
             this.covfefeNotifyIcon.Visible = true;
-            this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.covfefeNotifyIcon_DoubleClick);
+            this.covfefeNotifyIcon.DoubleClick += new System.EventHandler(this.CovfefeNotifyIcon_DoubleClick);
             // 
             // notifyContextMenu
             // 
@@ -84,21 +84,21 @@
             this.stayAwakeToolStripMenuItem.Name = "stayAwakeToolStripMenuItem";
             this.stayAwakeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.stayAwakeToolStripMenuItem.Text = "Stay Awake!";
-            this.stayAwakeToolStripMenuItem.Click += new System.EventHandler(this.stayAwakeToolStripMenuItem_Click);
+            this.stayAwakeToolStripMenuItem.Click += new System.EventHandler(this.StayAwakeToolStripMenuItem_Click);
             // 
             // keepMonitorsOnToolStripMenuItem
             // 
             this.keepMonitorsOnToolStripMenuItem.Name = "keepMonitorsOnToolStripMenuItem";
             this.keepMonitorsOnToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.keepMonitorsOnToolStripMenuItem.Text = "Keep Monitors On";
-            this.keepMonitorsOnToolStripMenuItem.Click += new System.EventHandler(this.keepMonitorsToolStripMenuItem_Click);
+            this.keepMonitorsOnToolStripMenuItem.Click += new System.EventHandler(this.KeepMonitorsToolStripMenuItem_Click);
             // 
             // normalOperationToolStripMenuItem
             // 
             this.normalOperationToolStripMenuItem.Name = "normalOperationToolStripMenuItem";
             this.normalOperationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.normalOperationToolStripMenuItem.Text = "Normal Operation";
-            this.normalOperationToolStripMenuItem.Click += new System.EventHandler(this.normalOperationToolStripMenuItem_Click);
+            this.normalOperationToolStripMenuItem.Click += new System.EventHandler(this.NormalOperationToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -110,7 +110,7 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -150,7 +150,7 @@
             this.closeButton.TabStop = false;
             this.closeButton.Text = "X";
             this.closeButton.UseVisualStyleBackColor = false;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.closeButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // settingsLabel
             // 
@@ -163,7 +163,7 @@
             this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             this.settingsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.settingsLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.settingsLabel_MouseDown);
+            this.settingsLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SettingsLabel_MouseDown);
             // 
             // startOnLoginCheckbox
             // 
@@ -253,7 +253,7 @@
             // 
             // reminderTimer
             // 
-            this.reminderTimer.Tick += new System.EventHandler(this.reminderTimer_Tick);
+            this.reminderTimer.Tick += new System.EventHandler(this.ReminderTimer_Tick);
             // 
             // toggleModeComboBox
             // 

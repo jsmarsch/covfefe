@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Covfefe.Properties;
 
@@ -59,17 +55,17 @@ namespace Covfefe
             Application.Exit();
         }
 
-        private void stayAwakeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StayAwakeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSleepMode(CovfefeSleepMode.StayAwake);
         }
 
-        private void keepMonitorsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void KeepMonitorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSleepMode(CovfefeSleepMode.MonitorsOn);
         }
 
-        private void normalOperationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NormalOperationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSleepMode(CovfefeSleepMode.Normal);
         }
@@ -108,12 +104,12 @@ namespace Covfefe
             if (sleepMode != CovfefeSleepMode.Normal && _settings.ShowReminder) reminderTimer.Start();
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Show();
         }
 
-        private void settingsLabel_MouseDown(object sender, MouseEventArgs e)
+        private void SettingsLabel_MouseDown(object sender, MouseEventArgs e)
         {
             // why can't I just be satisfied with the ugly, default windows border???
             // instead, my settings caption needs to make my settings window draggable
@@ -124,7 +120,7 @@ namespace Covfefe
             }
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        private void CloseButton_Click(object sender, EventArgs e)
         {
             _settingsFacade.SaveSettings(_settings);
             reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60000; // convert minutes to milliseconds
@@ -132,23 +128,23 @@ namespace Covfefe
             Hide();
         }
 
-        private void sleepReminderBalloonTip_Click(object s, EventArgs a) => SetSleepMode(CovfefeSleepMode.Normal); 
+        private void SleepReminderBalloonTip_Click(object s, EventArgs a) => SetSleepMode(CovfefeSleepMode.Normal); 
 
-        private void sleepReminderBalloon_Close(object s, EventArgs a)
+        private void SleepReminderBalloon_Close(object s, EventArgs a)
         {
-            covfefeNotifyIcon.BalloonTipClicked -= sleepReminderBalloonTip_Click;
-            covfefeNotifyIcon.BalloonTipClosed -= sleepReminderBalloon_Close;
+            covfefeNotifyIcon.BalloonTipClicked -= SleepReminderBalloonTip_Click;
+            covfefeNotifyIcon.BalloonTipClosed -= SleepReminderBalloon_Close;
         }
 
-        private void reminderTimer_Tick(object sender, EventArgs e)
+        private void ReminderTimer_Tick(object sender, EventArgs e)
         {
-            covfefeNotifyIcon.BalloonTipClicked += sleepReminderBalloonTip_Click;
-            covfefeNotifyIcon.BalloonTipClosed += sleepReminderBalloon_Close;
+            covfefeNotifyIcon.BalloonTipClicked += SleepReminderBalloonTip_Click;
+            covfefeNotifyIcon.BalloonTipClosed += SleepReminderBalloon_Close;
 
             covfefeNotifyIcon.ShowBalloonTip(10000, Resources.BalloonTitle_SleepReminder, Resources.BalloonText_SleepReminder, ToolTipIcon.None);
         }
 
-        private void covfefeNotifyIcon_DoubleClick(object sender, EventArgs e)
+        private void CovfefeNotifyIcon_DoubleClick(object sender, EventArgs e)
         {
             if (!_settings.DoubleClickToggleEnabled)
                 return;

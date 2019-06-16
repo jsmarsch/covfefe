@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Covfefe
@@ -29,9 +26,9 @@ namespace Covfefe
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var sleepManagementFacadefacade = new SleepManagementFacade(new Windows7PowerManagementEngine());
+                var sleepManagementFacade = new SleepManagementFacade(new Windows7PowerManagementEngine());
                 var settingsFacade = new SettingsFacade();
-                var mainForm = new TrayForm(sleepManagementFacadefacade, settingsFacade);
+                var mainForm = new TrayForm(sleepManagementFacade, settingsFacade);
                 Application.Run(mainForm);
             }
             finally

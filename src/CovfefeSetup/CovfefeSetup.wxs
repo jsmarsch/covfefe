@@ -28,7 +28,6 @@
     <!-- This property defines the ALLUSERS property and sets it to blank, which indicates that this     -->
     <!-- product will be  installed per-user instead of per-machine.                                     -->
     <Property Id="ALLUSERS" Secure="yes"/>
-    <UIRef Id="WixUI_Minimal"/>
     <WixVariable Id="WixUILicenseRtf" Value="..\..\License.rtf" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -67,13 +66,17 @@
 
     </DirectoryRef>
 
-    <!-- for launching Covfefe when the installation completes-->
-    <!--<UI>
-      <UIRef Id="WixUI_Minimal"/>
+     <!--for launching Covfefe when the installation completes-->
+    <UI>
+      <UIRef Id="WixUI_Minimal" />
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="DoAction"
+               Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>    
     </UI>
     <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Covfefe!" />
     <Property Id="WixShellExecTarget" Value="[#covfefe.exe]"/>
-    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes"/>-->
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes"/>
 
   </Product>
 </Wix>

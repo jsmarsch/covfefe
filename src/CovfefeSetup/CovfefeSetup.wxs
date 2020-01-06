@@ -20,8 +20,9 @@
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-    <Feature Id="ProductFeature" Title="CovfefeSetup" Level="1">
+    <Feature Id="ProductFeature" Title="Covfefe" Level="1">
       <ComponentRef Id="Covfefe.exe" />
+      <ComponentRef Id="ApplicationShortcut"/>
     </Feature>
   
     <!-- This property defines the ALLUSERS property and sets it to blank, which indicates that this     -->
@@ -29,7 +30,7 @@
     <Property Id="ALLUSERS" Secure="yes"/>
     <UIRef Id="WixUI_Minimal"/>
     <WixVariable Id="WixUILicenseRtf" Value="..\..\License.rtf" />
-  
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="AppDataFolder" Name="AppData">
         <Directory Id="AppRootDirectory" Name="Covfefe">

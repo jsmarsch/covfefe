@@ -154,5 +154,14 @@ namespace Covfefe
             else
                 SetSleepMode(CovfefeSleepMode.Normal);
         }
+
+        /// <summary>
+        /// Normally, the settings screen will be suppressed when Covfefe launches so that it runs unobtrusively in the system tray.  Call this method prior to launch to request that
+        /// the settings be displayed.  Generally, this would be done on the very first run of the app, so that the user is presented with the settings and knows that the app is running.
+        /// </summary>
+        public void ShowSettingsScreenOnInitialLoad()
+        {
+            _isInitialLoad = false;
+        }
     }
 }

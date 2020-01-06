@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,7 +14,7 @@ namespace Covfefe
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             // only allow 1 instance of this app to run at a time
             // todo:  I should scope this to the login session, so that there can be multiple instances in multi-session
@@ -29,6 +30,10 @@ namespace Covfefe
                 var sleepManagementFacade = new SleepManagementFacade(new Windows7PowerManagementEngine());
                 var settingsFacade = new SettingsFacade();
                 var mainForm = new TrayForm(sleepManagementFacade, settingsFacade);
+                
+                if(args?.FirstOrDefault() == "--ShowSettings")
+                    mainForm.ShowSettingsScreenOnInitialLoad();
+
                 Application.Run(mainForm);
             }
             finally

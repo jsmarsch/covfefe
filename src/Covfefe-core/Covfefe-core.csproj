@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <RootNamespace>Covfefe</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <ApplicationVisualStyles>true</ApplicationVisualStyles>
+	  <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+	  <ApplicationIcon>coffee_cup_59H_icon.ico</ApplicationIcon>
+	  <Title>Covfefe</Title>
+	  <Version>2.0.0</Version>
+	  <Description>A utility to prevent your PC from sleeping</Description>
+	  <Copyright>2022</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="coffee_cup_59H_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="coffee_cup_59H_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="TrayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Settings.settings">
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <Generator>SettingsSingleFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

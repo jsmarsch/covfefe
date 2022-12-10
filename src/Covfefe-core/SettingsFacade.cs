@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Covfefe.Contracts;
+using Covfefe.Models;
 using Microsoft.Win32;
 
 namespace Covfefe

@@ -10,7 +10,7 @@ namespace Covfefe
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             // only allow 1 instance of this app to run at a time
             // todo:  I should scope this to the login session, so that there can be multiple instances in multi-session

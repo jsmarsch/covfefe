@@ -1,4 +1,6 @@
-﻿namespace Covfefe
+﻿using Covfefe.Models;
+
+namespace Covfefe.Contracts
 {
     public interface ISettingsFacade
     {

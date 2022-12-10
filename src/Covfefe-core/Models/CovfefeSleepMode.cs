@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Covfefe
+namespace Covfefe.Models
 {
     public enum CovfefeSleepMode
     {

@@ -1,4 +1,4 @@
-﻿namespace Covfefe
+﻿namespace Covfefe.Models
 {
     public class CovfefeSettings
     {

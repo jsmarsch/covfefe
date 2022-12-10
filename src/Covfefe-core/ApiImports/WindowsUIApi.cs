@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Covfefe
+namespace Covfefe.ApiImports
 {
     public static class WindowsUIApi
     {

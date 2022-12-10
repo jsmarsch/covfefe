@@ -1,4 +1,4 @@
-﻿namespace Covfefe
+﻿namespace Covfefe.Contracts
 {
     public interface IPowerManagementEngine
     {

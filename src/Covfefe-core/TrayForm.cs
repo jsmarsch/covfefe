@@ -1,6 +1,9 @@
 ﻿using System;
 using System.CodeDom;
 using System.Windows.Forms;
+using Covfefe.ApiImports;
+using Covfefe.Contracts;
+using Covfefe.Models;
 
 namespace Covfefe
 {

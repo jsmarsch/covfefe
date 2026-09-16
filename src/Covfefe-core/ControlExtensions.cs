@@ -34,11 +34,11 @@ namespace Covfefe
             
             // examine the enum, create a key-value pair of the enum description and value.  If there is no description attribute, just use the value for the key and the value.
             var values = Enum.GetValues(enumType).Cast<TEnumType>()
-                .Where(v => enumValueFilterPredicate(v))
+                .Where(v =>enumValueFilterPredicate(v))
                 .Select(value =>
                 {
-                    var descriptionAttribute = Attribute.GetCustomAttribute(enumType.GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute;
-                    return new KeyValuePair<TEnumType, string>(value, descriptionAttribute?.Description ?? value.ToString());
+                    var descriptionAttribute = Attribute.GetCustomAttribute(enumType.GetField(value!.ToString()!)!, typeof(DescriptionAttribute)) as DescriptionAttribute;
+                    return new KeyValuePair<TEnumType, string>(value, descriptionAttribute?.Description ?? value.ToString()!);
                 })
                 .OrderBy(v => v.Value);
 

@@ -57,3 +57,17 @@ Key patterns:
 - `.vscode/launch.json` points at a stale `bin/Debug/net7.0-windows/Covfefe-core.dll` path; the project now targets **net10.0-windows**. Update the path before using F5 debugging.
 - `.vscode/tasks.json` builds `Covfefe.sln` (the full/legacy solution), which pulls in the .NET Framework project and the WiX installer — heavier and toolchain-dependent. For core-only work build `CovfefeCore.slnx` or the csproj directly.
 - Several `ISleepManagementFacade` members (`DelaySleepOnBatteryStateChange`, `DelaySleepOnLidClose`) are declared but `throw new NotImplementedException()`.
+
+## Agent skills
+
+### Issue tracker
+
+Gitea issues on the self-hosted instance at `http://vault.local:3000` (`jmarsch/Covfefe`), driven by the `tea` CLI — always with `--remote nas`, since `origin` is a GitHub mirror. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical roles, label strings unchanged. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.

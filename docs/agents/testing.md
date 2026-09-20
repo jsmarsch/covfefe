@@ -102,7 +102,7 @@ than the whole suite. Use it as the exception, and say in a comment what shared 
   element — `await Assert.That(entries[0].Key).IsEqualTo(...)`.
 - Lifecycle hooks are `[Before(Test)]` / `[After(Test)]`, and `[Before(Class)]` / `[After(Class)]`.
 - Test names read as sentences with underscores —
-  `LoadFromEnum_lists_members_in_the_order_the_enum_declares_them`.
+  `LoadFromEnum_lists_members_in_enum_order_not_alphabetically`.
 
 A test run drops an HTML report in `TestResults/` next to wherever it was invoked from. That
 directory is already gitignored.

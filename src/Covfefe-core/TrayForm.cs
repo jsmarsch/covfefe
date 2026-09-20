@@ -11,7 +11,7 @@ namespace Covfefe
         private readonly ISettingsFacade _settingsFacade;
         private CovfefeSettings _settings;
         private CovfefeSleepMode _sleepMode;
-        private bool _reminderBalloonIsShowing;
+        private bool _lastBalloonWasTheReminder;
 
         private const string BalloonText_KeepMonitorsOn =
             """Your Monitors will remain powered on, and your computer will not sleep.  To exit this mode, select "Normal Operation" in the context menu, or exit Covfefe.""";
@@ -40,7 +40,7 @@ namespace Covfefe
             InitializeComponent();
 
             // subscribe once: NotifyIcon raises BalloonTipClicked for whichever balloon is on
-            // screen, so the handler is gated on _reminderBalloonIsShowing rather than on
+            // screen, so the handler is gated on _lastBalloonWasTheReminder rather than on
             // subscribing and unsubscribing around each reminder.
             covfefeNotifyIcon.BalloonTipClicked += SleepReminderBalloonTip_Click;
 
@@ -100,8 +100,8 @@ namespace Covfefe
         {
             notifyContextMenu.UncheckAllItems();
 
-            // whatever balloon is on screen, a mode change supersedes the reminder
-            _reminderBalloonIsShowing = false;
+            // a mode change shows its own balloon, superseding any reminder
+            _lastBalloonWasTheReminder = false;
 
             switch (sleepMode)
             {
@@ -159,7 +159,7 @@ namespace Covfefe
 
         private void SleepReminderBalloonTip_Click(object s, EventArgs a)
         {
-            if (!_reminderBalloonIsShowing)
+            if (!_lastBalloonWasTheReminder)
                 return;
 
             SetSleepMode(CovfefeSleepMode.Normal);
@@ -167,7 +167,7 @@ namespace Covfefe
 
         private void ReminderTimer_Tick(object sender, EventArgs e)
         {
-            _reminderBalloonIsShowing = true;
+            _lastBalloonWasTheReminder = true;
             covfefeNotifyIcon.ShowBalloonTip(10000, BalloonTitle_SleepReminder, BalloonText_SleepReminder, ToolTipIcon.None);
         }
 

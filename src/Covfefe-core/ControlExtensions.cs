@@ -29,7 +29,9 @@ namespace Covfefe
             var enumType = typeof(TEnumType);
 
             // examine the enum, create a key-value pair of the enum description and value.  If there is no description attribute, just use the value for the key and the value.
-            // the members stay in the order the enum declares them, which is the order they are meant to be read in.
+            // Enum.GetValues orders members by their underlying value, which for CovfefeSleepMode is
+            // the order they are declared and meant to be read in - Normal first. Sorting by the
+            // description text instead would lead with "Keep Monitors On".
             var values = Enum.GetValues<TEnumType>()
                 .Where(v => enumValueFilterPredicate(v))
                 .Select(value =>

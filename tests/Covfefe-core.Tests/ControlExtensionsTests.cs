@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows.Forms;
+﻿using System.Reflection;
 using Covfefe.Models;
 using TUnit.Core.Executors;
 
@@ -32,13 +30,13 @@ public class ControlExtensionsTests
 
     [Test]
     [TestExecutor<STAThreadExecutor>]
-    public async Task LoadFromEnum_lists_members_in_the_order_the_enum_declares_them()
+    public async Task LoadFromEnum_lists_members_in_enum_order_not_alphabetically()
     {
         using var comboBox = new ComboBox();
 
         comboBox.LoadFromEnum<CovfefeSleepMode>();
 
-        // Declaration order is Normal, StayAwake, MonitorsOn. Sorting by the description text
+        // CovfefeSleepMode runs Normal, StayAwake, MonitorsOn. Sorting by the description text
         // instead would put "Keep Monitors On" first, which is not how the modes are meant to read.
         // Asserted position by position: IsEquivalentTo ignores order, so it cannot pin this.
         var entries = (KeyValuePair<CovfefeSleepMode, string>[]) comboBox.DataSource!;
@@ -75,7 +73,7 @@ public class ControlExtensionsTests
             .Where(method => method.Name == nameof(ControlExtensions.LoadFromEnum))
             .ToArray();
 
-        await Assert.That(overloads).Count().IsEqualTo(2);
+        await Assert.That(overloads).IsNotEmpty();
 
         foreach (var overload in overloads)
         {

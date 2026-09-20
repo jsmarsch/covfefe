@@ -4,8 +4,6 @@ namespace Covfefe
 {
     internal static class Program
     {
-        private static Mutex SingleInstanceMutex;
-
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -13,9 +11,8 @@ namespace Covfefe
         public static void Main(string[] args)
         {
             // only allow 1 instance of this app to run at a time
-            // todo:  I should scope this to the login session, so that there can be multiple instances in multi-session
-            SingleInstanceMutex = new Mutex(false, Assembly.GetEntryAssembly().FullName);
-            if (!SingleInstanceMutex.WaitOne(0))
+            using var singleInstanceMutex = new Mutex(false, Assembly.GetEntryAssembly().FullName);
+            if (!singleInstanceMutex.WaitOne(0))
                 return;
 
             try
@@ -28,14 +25,14 @@ namespace Covfefe
                 var settingsFacade = new SettingsFacade();
                 var mainForm = new TrayForm(sleepManagementFacade, settingsFacade);
 
-                if (args?.FirstOrDefault() == "--ShowSettings")
+                if (CommandLine.AsksForSettingsScreen(args))
                     mainForm.ShowSettingsScreenOnInitialLoad();
 
                 Application.Run(mainForm);
             }
             finally
             {
-                SingleInstanceMutex.ReleaseMutex();
+                singleInstanceMutex.ReleaseMutex();
             }
 
         }

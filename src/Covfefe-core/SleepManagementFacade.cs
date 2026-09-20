@@ -1,5 +1,4 @@
-﻿using System;
-using Covfefe.Contracts;
+﻿using Covfefe.Contracts;
 
 namespace Covfefe
 {

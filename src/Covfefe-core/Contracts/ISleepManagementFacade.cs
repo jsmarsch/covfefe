@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Covfefe.Contracts
+﻿namespace Covfefe.Contracts
 {
     public interface ISleepManagementFacade
     {

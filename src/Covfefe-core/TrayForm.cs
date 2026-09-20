@@ -1,7 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Windows.Forms;
-using Covfefe.ApiImports;
+﻿using Covfefe.ApiImports;
 using Covfefe.Contracts;
 using Covfefe.Models;
 
@@ -14,6 +11,7 @@ namespace Covfefe
         private readonly ISettingsFacade _settingsFacade;
         private CovfefeSettings _settings;
         private CovfefeSleepMode _sleepMode;
+        private bool _reminderBalloonIsShowing;
 
         private const string BalloonText_KeepMonitorsOn =
             """Your Monitors will remain powered on, and your computer will not sleep.  To exit this mode, select "Normal Operation" in the context menu, or exit Covfefe.""";
@@ -40,6 +38,11 @@ namespace Covfefe
             _sleepManagementFacade = sleepManagementFacade;
             _settingsFacade = settingsFacade;
             InitializeComponent();
+
+            // subscribe once: NotifyIcon raises BalloonTipClicked for whichever balloon is on
+            // screen, so the handler is gated on _reminderBalloonIsShowing rather than on
+            // subscribing and unsubscribing around each reminder.
+            covfefeNotifyIcon.BalloonTipClicked += SleepReminderBalloonTip_Click;
 
             _settings = _settingsFacade.GetSettings();
             ConfigureSettingsControls(_settings);
@@ -97,6 +100,9 @@ namespace Covfefe
         {
             notifyContextMenu.UncheckAllItems();
 
+            // whatever balloon is on screen, a mode change supersedes the reminder
+            _reminderBalloonIsShowing = false;
+
             switch (sleepMode)
             {
                 case CovfefeSleepMode.Normal:
@@ -151,19 +157,17 @@ namespace Covfefe
             Hide();
         }
 
-        private void SleepReminderBalloonTip_Click(object s, EventArgs a) => SetSleepMode(CovfefeSleepMode.Normal); 
-
-        private void SleepReminderBalloon_Close(object s, EventArgs a)
+        private void SleepReminderBalloonTip_Click(object s, EventArgs a)
         {
-            covfefeNotifyIcon.BalloonTipClicked -= SleepReminderBalloonTip_Click;
-            covfefeNotifyIcon.BalloonTipClosed -= SleepReminderBalloon_Close;
+            if (!_reminderBalloonIsShowing)
+                return;
+
+            SetSleepMode(CovfefeSleepMode.Normal);
         }
 
         private void ReminderTimer_Tick(object sender, EventArgs e)
         {
-            covfefeNotifyIcon.BalloonTipClicked += SleepReminderBalloonTip_Click;
-            covfefeNotifyIcon.BalloonTipClosed += SleepReminderBalloon_Close;
-
+            _reminderBalloonIsShowing = true;
             covfefeNotifyIcon.ShowBalloonTip(10000, BalloonTitle_SleepReminder, BalloonText_SleepReminder, ToolTipIcon.None);
         }
 

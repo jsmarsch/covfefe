@@ -97,9 +97,12 @@ than the whole suite. Use it as the exception, and say in a comment what shared 
   `await` passes silently**, so check for it when a test looks suspiciously green.
 - Tests that touch WinForms controls need an STA thread: put `[TestExecutor<STAThreadExecutor>]`
   on the test alongside `[Test]` (see `ControlExtensionsTests`).
+- **`IsEquivalentTo` ignores order.** It compares membership, so it will not catch a collection
+  that comes back in the wrong sequence. When order is the thing under test, assert element by
+  element — `await Assert.That(entries[0].Key).IsEqualTo(...)`.
 - Lifecycle hooks are `[Before(Test)]` / `[After(Test)]`, and `[Before(Class)]` / `[After(Class)]`.
 - Test names read as sentences with underscores —
-  `LoadFromEnum_sorts_by_the_text_the_user_reads_not_by_the_enum_order`.
+  `LoadFromEnum_lists_members_in_the_order_the_enum_declares_them`.
 
 A test run drops an HTML report in `TestResults/` next to wherever it was invoked from. That
 directory is already gitignored.

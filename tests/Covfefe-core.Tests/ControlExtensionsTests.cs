@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Covfefe.Models;
 using TUnit.Core.Executors;
@@ -22,24 +23,30 @@ public class ControlExtensionsTests
 
         var entries = (KeyValuePair<CovfefeSleepMode, string>[]) comboBox.DataSource!;
         await Assert.That(entries.Select(e => e.Value))
-            .IsEquivalentTo(new[] { "Keep Monitors On", "Normal", "Stay Awake!" });
+            .IsEquivalentTo(new[] { "Normal", "Stay Awake!", "Keep Monitors On" });
         await Assert.That(entries.Select(e => e.Key))
-            .IsEquivalentTo(new[] { CovfefeSleepMode.MonitorsOn, CovfefeSleepMode.Normal, CovfefeSleepMode.StayAwake });
+            .IsEquivalentTo(new[] { CovfefeSleepMode.Normal, CovfefeSleepMode.StayAwake, CovfefeSleepMode.MonitorsOn });
         await Assert.That(comboBox.DisplayMember).IsEqualTo("Value");
         await Assert.That(comboBox.ValueMember).IsEqualTo("Key");
     }
 
     [Test]
     [TestExecutor<STAThreadExecutor>]
-    public async Task LoadFromEnum_sorts_by_the_text_the_user_reads_not_by_the_enum_order()
+    public async Task LoadFromEnum_lists_members_in_the_order_the_enum_declares_them()
     {
         using var comboBox = new ComboBox();
 
         comboBox.LoadFromEnum<CovfefeSleepMode>();
 
-        // Declaration order is Normal, StayAwake, MonitorsOn; display order is alphabetical by description.
+        // Declaration order is Normal, StayAwake, MonitorsOn. Sorting by the description text
+        // instead would put "Keep Monitors On" first, which is not how the modes are meant to read.
+        // Asserted position by position: IsEquivalentTo ignores order, so it cannot pin this.
         var entries = (KeyValuePair<CovfefeSleepMode, string>[]) comboBox.DataSource!;
-        await Assert.That(entries[0].Key).IsEqualTo(CovfefeSleepMode.MonitorsOn);
+        await Assert.That(entries.Length).IsEqualTo(3);
+        await Assert.That(entries[0].Key).IsEqualTo(CovfefeSleepMode.Normal);
+        await Assert.That(entries[1].Key).IsEqualTo(CovfefeSleepMode.StayAwake);
+        await Assert.That(entries[2].Key).IsEqualTo(CovfefeSleepMode.MonitorsOn);
+        await Assert.That(entries[0].Value).IsEqualTo("Normal");
     }
 
     [Test]
@@ -52,6 +59,32 @@ public class ControlExtensionsTests
 
         var entries = (KeyValuePair<CovfefeSleepMode, string>[]) comboBox.DataSource!;
         await Assert.That(entries.Select(e => e.Key))
-            .IsEquivalentTo(new[] { CovfefeSleepMode.MonitorsOn, CovfefeSleepMode.StayAwake });
+            .IsEquivalentTo(new[] { CovfefeSleepMode.StayAwake, CovfefeSleepMode.MonitorsOn });
+    }
+
+    /// <summary>
+    /// The helper only makes sense for an enum, so the type parameter is constrained to one.
+    /// A wrong type argument is then a compile error rather than an empty combo box at runtime,
+    /// which is not something a test can assert directly — so it asserts the constraint instead.
+    /// </summary>
+    [Test]
+    public async Task LoadFromEnum_is_constrained_to_enum_type_arguments()
+    {
+        var overloads = typeof(ControlExtensions)
+            .GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Where(method => method.Name == nameof(ControlExtensions.LoadFromEnum))
+            .ToArray();
+
+        await Assert.That(overloads).Count().IsEqualTo(2);
+
+        foreach (var overload in overloads)
+        {
+            var typeParameter = overload.GetGenericArguments().Single();
+
+            await Assert.That(typeParameter.GetGenericParameterConstraints()).Contains(typeof(Enum));
+            await Assert.That(typeParameter.GenericParameterAttributes
+                    .HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
+                .IsTrue();
+        }
     }
 }

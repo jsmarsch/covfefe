@@ -68,10 +68,10 @@ public async Task Saving_writes_a_readable_file()
 }
 ```
 
-For this to work, the code under test has to let the test say **where**. `SettingsFacade` does not
+For this to work, the code under test has to let the test say **where**. `SettingsService` does not
 yet: as of today its constructor takes no arguments and its Run key path is a hard-coded `const`,
 which is exactly why nothing tests it. Ticket #4 turns the settings file path and the Run key path
-into constructor arguments, and only then does the example above compile against a real facade.
+into constructor arguments, and only then does the example above compile against a real service.
 
 Anything new that reaches for a fixed machine-wide path should take that path as an argument for
 the same reason — a hard-coded path is what forces a test to either fake the world or run alone.

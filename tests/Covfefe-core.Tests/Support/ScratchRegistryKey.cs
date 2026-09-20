@@ -24,7 +24,7 @@ public sealed class ScratchRegistryKey : IDisposable
         Key = key;
     }
 
-    /// <summary>The key's path relative to HKEY_CURRENT_USER — what a facade under test takes as its Run key path.</summary>
+    /// <summary>The key's path relative to HKEY_CURRENT_USER — what a service under test takes as its Run key path.</summary>
     public string Path { get; }
 
     /// <summary>The open, writable key. It exists by the time this returns.</summary>

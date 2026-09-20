@@ -1,18 +1,18 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Covfefe.Contracts;
 using Covfefe.Models;
 using Microsoft.Win32;
 
 namespace Covfefe
 {
-    public class SettingsFacade : ISettingsFacade
+    public class SettingsService : ISettingsService
     {
         private const string RunKeyName = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
         private readonly string _exeName;
         private readonly string _appName;
 
-        public SettingsFacade()
+        public SettingsService()
         {
             _exeName = Assembly.GetEntryAssembly().Location;
             _appName = Path.GetFileNameWithoutExtension(_exeName);

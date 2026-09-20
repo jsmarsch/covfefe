@@ -49,21 +49,21 @@ Manual dependency injection in `Program.cs` wires a layered stack; there is no D
 ```
 Program.cs
   └─ TrayForm (the only UI; NotifyIcon + hidden settings Form)
-       ├─ ISleepManagementFacade  → SleepManagementFacade
+       ├─ ISleepManagementService  → SleepManagementService
        │      └─ IPowerManagementEngine → Windows7PowerManagementEngine  → WindowsPowerManagementApi (P/Invoke)
-       └─ ISettingsFacade         → SettingsFacade
+       └─ ISettingsService         → SettingsService
 ```
 
 Key patterns:
-- **Facade → Engine layering isolates Win32 volatility.** `SleepManagementFacade` is the app-facing API; the `IPowerManagementEngine` implementation holds the actual P/Invoke calls. The engine is deliberately named for an OS generation (`Windows7PowerManagementEngine`) so a different OS strategy can be swapped behind the interface. Put new native power behavior in an engine, not in the facade or the form.
-- **Interfaces in `Contracts/`** exist for this seam and for testability — `SleepManagementFacadeTests` drives `SleepManagementFacade` through a stand-in `IPowerManagementEngine`.
+- **Service → Engine layering isolates Win32 volatility.** `SleepManagementService` is the app-facing API; the `IPowerManagementEngine` implementation holds the actual P/Invoke calls. The engine is deliberately named for an OS generation (`Windows7PowerManagementEngine`) so a different OS strategy can be swapped behind the interface. Put new native power behavior in an engine, not in the service or the form.
+- **Interfaces in `Contracts/`** exist for this seam and for testability — `SleepManagementServiceTests` drives `SleepManagementService` through a stand-in `IPowerManagementEngine`.
 - **P/Invoke lives only in `ApiImports/`** (`WindowsPowerManagementApi`, `WindowsUIApi`). Keep new `DllImport`s there.
-- **Settings persistence is split** (`SettingsFacade`): most settings use the generated .NET `Settings.Default` (`Settings.settings`), but **Start-at-login is the Windows Run registry key** (`HKCU\...\CurrentVersion\Run`), read/written directly. `GetSettings()` swallows any load failure and resets to defaults rather than crashing.
+- **Settings persistence is split** (`SettingsService`): most settings use the generated .NET `Settings.Default` (`Settings.settings`), but **Start-at-login is the Windows Run registry key** (`HKCU\...\CurrentVersion\Run`), read/written directly. `GetSettings()` swallows any load failure and resets to defaults rather than crashing.
 - **Sleep modes** (`CovfefeSleepMode`: `Normal`, `StayAwake`, `MonitorsOn`) drive everything in `TrayForm.SetSleepMode` — tray icon, balloon tip, the "did you forget?" reminder timer, and the optional double-click toggle. `[Description]` attributes on the enum are the combo-box display text, surfaced via `ControlExtensions.LoadFromEnum`.
 
 ## Gotchas
 
-- Several `ISleepManagementFacade` members (`DelaySleepOnBatteryStateChange`, `DelaySleepOnLidClose`) are declared but `throw new NotImplementedException()`.
+- Several `ISleepManagementService` members (`DelaySleepOnBatteryStateChange`, `DelaySleepOnLidClose`) are declared but `throw new NotImplementedException()`.
 
 ## Agent skills
 

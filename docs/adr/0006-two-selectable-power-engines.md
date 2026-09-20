@@ -15,7 +15,7 @@ Selecting the engine only at startup — read from settings, restart to change �
 ## Consequences
 
 - **`IPowerManagementEngine` gains `IDisposable`.** Live switching is what forces it; process exit does not, since Windows drops handles and power requests at process death anyway. `Windows7PowerManagementEngine` has nothing to release and implements it as a no-op, while the power-request engine closes its handle. That asymmetry is the seam doing its job.
-- **`Program.cs` constructs both engines at startup** and hands both to `SleepManagementFacade`, which owns the active one, performs the switch, and disposes both on shutdown. No factory: two fixed implementations do not need one.
+- **`Program.cs` constructs both engines at startup** and hands both to `SleepManagementService`, which owns the active one, performs the switch, and disposes both on shutdown. No factory: two fixed implementations do not need one.
 - **The switch sets the incoming engine before disposing the outgoing one**, so a failure leaves the previous engine still holding and the revert is just putting the setting back. Failure is close to hypothetical — these APIs fail only on malformed arguments — but the ordering costs nothing and removes the half-switched state by construction.
 - `TrayForm` triggers the switch after `FormClosing` saves settings.
 - The checkbox reads "legacy power API" and sits under an Advanced heading, because no user has a reason to want it.

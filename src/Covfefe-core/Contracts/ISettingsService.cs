@@ -1,8 +1,8 @@
-﻿using Covfefe.Models;
+using Covfefe.Models;
 
 namespace Covfefe.Contracts
 {
-    public interface ISettingsFacade
+    public interface ISettingsService
     {
         CovfefeSettings GetSettings();
         void SaveSettings(CovfefeSettings settings);

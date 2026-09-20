@@ -3,18 +3,18 @@ using Covfefe.Contracts;
 namespace Covfefe.Tests;
 
 /// <summary>
-/// The facade is the app-facing API; the engine behind it holds the P/Invoke calls.
-/// These tests pin the mapping from one to the other, which is the whole job of the facade.
+/// The service is the app-facing API; the engine behind it holds the P/Invoke calls.
+/// These tests pin the mapping from one to the other, which is the whole job of the service.
 /// </summary>
-public class SleepManagementFacadeTests
+public class SleepManagementServiceTests
 {
     [Test]
     public async Task DisableSleep_asks_the_engine_to_prevent_sleep()
     {
         var engine = new RecordingPowerManagementEngine();
-        var facade = new SleepManagementFacade(engine);
+        var service = new SleepManagementService(engine);
 
-        facade.DisableSleep();
+        service.DisableSleep();
 
         await Assert.That(engine.Calls).IsEquivalentTo(new[] { nameof(IPowerManagementEngine.PreventSleep) });
     }
@@ -23,9 +23,9 @@ public class SleepManagementFacadeTests
     public async Task KeepMonitorsAwake_asks_the_engine_to_keep_monitors_on()
     {
         var engine = new RecordingPowerManagementEngine();
-        var facade = new SleepManagementFacade(engine);
+        var service = new SleepManagementService(engine);
 
-        facade.KeepMonitorsAwake();
+        service.KeepMonitorsAwake();
 
         await Assert.That(engine.Calls).IsEquivalentTo(new[] { nameof(IPowerManagementEngine.KeepMonitorsOn) });
     }
@@ -34,9 +34,9 @@ public class SleepManagementFacadeTests
     public async Task ClearSleepOverrides_asks_the_engine_to_clear_its_overrides()
     {
         var engine = new RecordingPowerManagementEngine();
-        var facade = new SleepManagementFacade(engine);
+        var service = new SleepManagementService(engine);
 
-        facade.ClearSleepOverrides();
+        service.ClearSleepOverrides();
 
         await Assert.That(engine.Calls)
             .IsEquivalentTo(new[] { nameof(IPowerManagementEngine.ClearPowerManagementOverrides) });

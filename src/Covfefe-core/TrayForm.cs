@@ -1,4 +1,4 @@
-﻿using Covfefe.ApiImports;
+using Covfefe.ApiImports;
 using Covfefe.Contracts;
 using Covfefe.Models;
 
@@ -6,9 +6,9 @@ namespace Covfefe
 {
     public partial class TrayForm : Form
     {
-        private readonly ISleepManagementFacade _sleepManagementFacade;
+        private readonly ISleepManagementService _sleepManagementService;
         private bool _isInitialLoad = true;
-        private readonly ISettingsFacade _settingsFacade;
+        private readonly ISettingsService _settingsService;
         private CovfefeSettings _settings;
         private CovfefeSleepMode _sleepMode;
         private bool _lastBalloonWasTheReminder;
@@ -33,18 +33,18 @@ namespace Covfefe
 
         private const string BalloonTitle_StayAwake = "Stay Awake!";
 
-        public TrayForm(ISleepManagementFacade sleepManagementFacade, ISettingsFacade settingsFacade)
+        public TrayForm(ISleepManagementService sleepManagementService, ISettingsService settingsService)
         {
-            _sleepManagementFacade = sleepManagementFacade;
-            _settingsFacade = settingsFacade;
+            _sleepManagementService = sleepManagementService;
+            _settingsService = settingsService;
             InitializeComponent();
 
-            // subscribe once: NotifyIcon raises BalloonTipClicked for whichever balloon is on
-            // screen, so the handler is gated on _lastBalloonWasTheReminder rather than on
-            // subscribing and unsubscribing around each reminder.
+            // NotifyIcon raises BalloonTipClicked for whichever balloon is on screen, whatever
+            // showed it, so the handler acts only when _lastBalloonWasTheReminder says the
+            // reminder is the balloon being clicked.
             covfefeNotifyIcon.BalloonTipClicked += SleepReminderBalloonTip_Click;
 
-            _settings = _settingsFacade.GetSettings();
+            _settings = _settingsService.GetSettings();
             ConfigureSettingsControls(_settings);
             SetSleepMode(_settings.DefaultSleepMode);
         }
@@ -106,19 +106,19 @@ namespace Covfefe
             switch (sleepMode)
             {
                 case CovfefeSleepMode.Normal:
-                    _sleepManagementFacade.ClearSleepOverrides();
+                    _sleepManagementService.ClearSleepOverrides();
                     normalOperationToolStripMenuItem.Checked = true;
                     covfefeNotifyIcon.Icon = Resources.coffee_cup_cold;
                     if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, BalloonTitle_Normal, BalloonText_Normal, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.StayAwake:
-                    _sleepManagementFacade.DisableSleep();
+                    _sleepManagementService.DisableSleep();
                     stayAwakeToolStripMenuItem.Checked = true;
                     covfefeNotifyIcon.Icon = Resources.coffee_cup;
                     if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, BalloonTitle_StayAwake, BalloonText_StayAwake, ToolTipIcon.None);
                     break;
                 case CovfefeSleepMode.MonitorsOn:
-                    _sleepManagementFacade.KeepMonitorsAwake();
+                    _sleepManagementService.KeepMonitorsAwake();
                     keepMonitorsOnToolStripMenuItem.Checked = true;
                     covfefeNotifyIcon.Icon = Resources.coffee_cup;
                     if (_settings.ShowBalloonTips) covfefeNotifyIcon.ShowBalloonTip(10000, BalloonTitle_KeepMonitorsOn, BalloonText_KeepMonitorsOn, ToolTipIcon.None);
@@ -151,7 +151,7 @@ namespace Covfefe
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            _settingsFacade.SaveSettings(_settings);
+            _settingsService.SaveSettings(_settings);
             reminderTimer.Interval = _settings.ReminderTimeoutMinutes * 60000; // convert minutes to milliseconds
             reminderTimer.Enabled = _settings.ShowReminder && _sleepMode != CovfefeSleepMode.Normal;
             Hide();

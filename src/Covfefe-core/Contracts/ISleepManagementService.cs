@@ -1,6 +1,6 @@
-﻿namespace Covfefe.Contracts
+namespace Covfefe.Contracts
 {
-    public interface ISleepManagementFacade
+    public interface ISleepManagementService
     {
         void KeepMonitorsAwake();
         void DisableSleep();

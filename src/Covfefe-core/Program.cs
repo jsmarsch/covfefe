@@ -21,9 +21,9 @@ namespace Covfefe
                 // see https://aka.ms/applicationconfiguration.
                 ApplicationConfiguration.Initialize();
 
-                var sleepManagementFacade = new SleepManagementFacade(new Windows7PowerManagementEngine());
-                var settingsFacade = new SettingsFacade();
-                var mainForm = new TrayForm(sleepManagementFacade, settingsFacade);
+                var sleepManagementService = new SleepManagementService(new Windows7PowerManagementEngine());
+                var settingsService = new SettingsService();
+                var mainForm = new TrayForm(sleepManagementService, settingsService);
 
                 if (CommandLine.AsksForSettingsScreen(args))
                     mainForm.ShowSettingsScreenOnInitialLoad();

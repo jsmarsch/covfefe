@@ -68,9 +68,9 @@ On Modern Standby systems, neither API blocks *user-initiated* sleep (lid close,
 
 The existing design already anticipated this. `Windows7PowerManagementEngine` sitting behind `IPowerManagementEngine` is exactly the intended seam — this becomes a new engine class (`WindowsPowerRequestEngine` or similar) and nothing above it changes.
 
-### Unimplemented facade members
+### Unimplemented service members
 
-`ISleepManagementFacade.DelaySleepOnBatteryStateChange` and `DelaySleepOnLidClose` currently `throw new NotImplementedException()`. The real implementation is `RegisterPowerSettingNotification` + `WM_POWERBROADCAST` handled in `TrayForm.WndProc`, using `GUID_LIDSWITCH_STATE_CHANGE` / `GUID_ACDC_POWER_SOURCE`.
+`ISleepManagementService.DelaySleepOnBatteryStateChange` and `DelaySleepOnLidClose` currently `throw new NotImplementedException()`. The real implementation is `RegisterPowerSettingNotification` + `WM_POWERBROADCAST` handled in `TrayForm.WndProc`, using `GUID_LIDSWITCH_STATE_CHANGE` / `GUID_ACDC_POWER_SOURCE`.
 
 **Decision needed:** build them or delete them from the interface. As written they are a trap for a future caller.
 
@@ -84,13 +84,13 @@ WinRT's `Windows.System.Display.DisplayRequest` is display-only and buys nothing
 
 ### Current state
 
-`SettingsFacade` uses `ApplicationSettingsBase` (`Settings.settings`), which writes to:
+`SettingsService` uses `ApplicationSettingsBase` (`Settings.settings`), which writes to:
 
 ```
 %LOCALAPPDATA%\Covfefe\Covfefe.exe_Url_yco3y14cdui42yafisiz340riraem11k\1.0.0.0\user.config
 ```
 
-That folder was confirmed present on the dev machine, still at **1.0.0.0** while the csproj declares `2.0.0`. The hashed, version-keyed path is the entire reason `UpgradeNeeded` / `Upgrade()` / `Reload()` exists in `SettingsFacade`.
+That folder was confirmed present on the dev machine, still at **1.0.0.0** while the csproj declares `2.0.0`. The hashed, version-keyed path is the entire reason `UpgradeNeeded` / `Upgrade()` / `Reload()` exists in `SettingsService`.
 
 ### Recommendation
 
@@ -125,13 +125,13 @@ Windows 11's **Settings → Startup apps** lets the user disable a Run-key entry
 HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
 ```
 
-`SettingsFacade.GetSettings()` reads only the Run key, so the settings checkbox reports "Start at login: on" while Windows has it switched off. This needs a `StartupApproved` check.
+`SettingsService.GetSettings()` reads only the Run key, so the settings checkbox reports "Start at login: on" while Windows has it switched off. This needs a `StartupApproved` check.
 
 **Caveat:** the exact byte encoding of that binary value is undocumented (the first byte flags enabled/disabled). Confirm empirically before coding against it.
 
 ### Separate defect
 
-`runKey.SetValue(_appName, _exeName)` (`SettingsFacade.cs:68`) writes the path **unquoted**. The value should be quoted — a Windows username containing a space (`C:\Users\Jane Smith\...`) produces an ambiguous Run entry.
+`runKey.SetValue(_appName, _exeName)` (`SettingsService.cs:68`) writes the path **unquoted**. The value should be quoted — a Windows username containing a space (`C:\Users\Jane Smith\...`) produces an ambiguous Run entry.
 
 *(Correction to an earlier draft of this plan: it claimed the installer places the exe under Program Files. It does not — it installs to `%APPDATA%\Covfefe`. The quoting recommendation stands, but for the reason above. The install location itself is a significant problem in its own right — see §9.)*
 
@@ -139,9 +139,9 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
 
 ## 4. Bugs found
 
-1. **`Assembly.GetEntryAssembly().Location` returns an empty string under single-file publish** — `SettingsFacade.cs:20`. Start-at-login would silently write an empty Run value. Use `Environment.ProcessPath`, which also correctly yields the `.exe` rather than the `.dll`.
+1. **`Assembly.GetEntryAssembly().Location` returns an empty string under single-file publish** — `SettingsService.cs:20`. Start-at-login would silently write an empty Run value. Use `Environment.ProcessPath`, which also correctly yields the `.exe` rather than the `.dll`.
 
-2. **Unguarded registry null** — `SettingsFacade.cs:64`. `OpenSubKey(..., writable: true)` returns null if the key is missing, causing an NRE on save. Use `CreateSubKey`. Four of the ten build warnings point at exactly this.
+2. **Unguarded registry null** — `SettingsService.cs:64`. `OpenSubKey(..., writable: true)` returns null if the key is missing, causing an NRE on save. Use `CreateSubKey`. Four of the ten build warnings point at exactly this.
 
 3. **Event handler leak in the reminder** — `TrayForm.cs:162-168`. Every tick re-subscribes `BalloonTipClicked` and `BalloonTipClosed`; the only unsubscribe lives in `BalloonTipClosed`, which on Windows 10/11 does *not* reliably fire (see §6). Handlers accumulate, so after N reminders a single click runs `SetSleepMode(Normal)` N times. Subscribe once in the constructor.
 
@@ -174,7 +174,7 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
 - **Target `net10.0-windows10.0.26100.0`** with `<SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>`, since the app is Windows 11 only. Enables the platform-compatibility analyzer and provides direct WinRT projections with no extra packages.
 
 - **Clear the 10 nullable warnings**, then turn on `<TreatWarningsAsErrors>`. Every current warning points at a real null path:
-  - `CS8602` × 4 — `SettingsFacade.cs:20,42,68,72`
+  - `CS8602` × 4 — `SettingsService.cs:20,42,68,72`
   - `CS8602` × 1, `CS8618` × 1 — `Program.cs:17,7`
   - `CS8622` × 4 — `TrayForm.cs:158,159,164,165` (event handler signatures need `object?`)
 
@@ -242,14 +242,14 @@ Add a `CovfefeTheme` enum following the existing `CovfefeSleepMode` pattern — 
 | `Light` | "Light" | `SystemColorMode.Classic` |
 | `Dark` | "Dark" | `SystemColorMode.Dark` |
 
-**Load-order constraint — this changes `Program.cs` wiring.** `SetColorMode` must be called next to `ApplicationConfiguration.Initialize()`, before any window exists. But the theme lives in settings, and today `TrayForm` calls `GetSettings()` from its *own constructor*. So `SettingsFacade` must be constructed and read in `Main`, and the resulting `CovfefeSettings` passed into `TrayForm` rather than fetched by it:
+**Load-order constraint — this changes `Program.cs` wiring.** `SetColorMode` must be called next to `ApplicationConfiguration.Initialize()`, before any window exists. But the theme lives in settings, and today `TrayForm` calls `GetSettings()` from its *own constructor*. So `SettingsService` must be constructed and read in `Main`, and the resulting `CovfefeSettings` passed into `TrayForm` rather than fetched by it:
 
 ```
-var settingsFacade = new SettingsFacade();
-var settings = settingsFacade.GetSettings();      // now happens in Main
+var settingsService = new SettingsService();
+var settings = settingsService.GetSettings();      // now happens in Main
 ApplicationConfiguration.Initialize();
 Application.SetColorMode(MapTheme(settings.Theme));  // before any window
-var mainForm = new TrayForm(sleepFacade, settingsFacade, settings);
+var mainForm = new TrayForm(sleepService, settingsService, settings);
 ```
 
 This is a small, contained change, but it does alter `TrayForm`'s constructor signature.
@@ -297,7 +297,7 @@ The csproj declares `Copyright 2022` and `Version 2.0.0` while the deployed conf
 | # | Work | Rationale |
 |---|---|---|
 | 1 | **Bug fixes + nullable warnings** (§4) | Small, independent, no design decisions required. Defer bug #4 to step 4, where it is forced anyway |
-| 2 | **JSON settings** (§2) + **`StartupApproved` fix** (§3) | Deletes the upgrade machinery; self-contained behind `ISettingsFacade`. Add the `Theme` field here so step 4 has somewhere to persist it |
+| 2 | **JSON settings** (§2) + **`StartupApproved` fix** (§3) | Deletes the upgrade machinery; self-contained behind `ISettingsService`. Add the `Theme` field here so step 4 has somewhere to persist it |
 | 3 | **Power Request engine** (§1) | New `IPowerManagementEngine` implementation; nothing above it changes. Make the CsWin32-vs-`LibraryImport` call here |
 | 4 | **Chrome removal + dark mode + theme setting + `PerMonitorV2`** (§6) | **Do these as one pass — see below** |
 | 5 | **Installer: move off `%APPDATA%`, fill in metadata** (§9) | Free, removes most of the antivirus false-positive signal. Independent of everything above — can be done at any point |
@@ -513,7 +513,7 @@ Framework-dependent builds require the .NET 10 Desktop Runtime, and **installing
 
 §2 puts settings in `%LOCALAPPDATA%\Covfefe\settings.json`. A portable build should keep settings **beside the executable** so the whole thing travels on a USB stick.
 
-Standard solution, used by KeePass and Everything among others: probe for a marker or config file next to the exe at startup; if present, run in portable mode and use that path; otherwise use `%LOCALAPPDATA%`. This is a small, contained addition to `SettingsFacade` and should be designed in when §2 is implemented rather than retrofitted.
+Standard solution, used by KeePass and Everything among others: probe for a marker or config file next to the exe at startup; if present, run in portable mode and use that path; otherwise use `%LOCALAPPDATA%`. This is a small, contained addition to `SettingsService` and should be designed in when §2 is implemented rather than retrofitted.
 
 Start-at-login still works in portable mode — the `HKCU` Run key needs no admin — but it writes outside the app directory, which is a deviation from strict portability. Offer it; consider defaulting it off in portable mode.
 
@@ -588,7 +588,7 @@ build (dotnet build)
 |---|---|
 | 1. Migrate WiX v3 to v5/v6, simplify to per-machine Program Files | nothing — do first |
 | 2. `Directory.Build.props` version single-sourcing | nothing |
-| 3. Portable settings-location mode in `SettingsFacade` | §2 |
+| 3. Portable settings-location mode in `SettingsService` | §2 |
 | 4. GitHub Release + CI build of both artifacts | 1, 2 |
 | 5. Code signing in CI (§9) | certificate purchased |
 | 6. winget manifest, both installer entries | 4, 5 |

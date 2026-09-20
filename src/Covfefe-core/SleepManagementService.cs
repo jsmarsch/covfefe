@@ -1,12 +1,12 @@
-﻿using Covfefe.Contracts;
+using Covfefe.Contracts;
 
 namespace Covfefe
 {
-    public class SleepManagementFacade: ISleepManagementFacade
+    public class SleepManagementService: ISleepManagementService
     {
         private readonly IPowerManagementEngine _powerManagementEngine;
 
-        public SleepManagementFacade(IPowerManagementEngine powerManagementEngine)
+        public SleepManagementService(IPowerManagementEngine powerManagementEngine)
         {
             _powerManagementEngine = powerManagementEngine;
         }

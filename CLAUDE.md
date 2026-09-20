@@ -14,7 +14,7 @@ The repo contains the **same application twice**. Both use the `Covfefe` root na
 - **`src/Covfefe/` (`Covfefe.csproj`) — LEGACY.** Classic (non-SDK) `.NET Framework v4.8` project, files flat in the project root. Kept for the migration; prefer changing `Covfefe-core` unless you are deliberately touching the old build. **Changes made to one project are NOT shared with the other** — there is no shared assembly; the files are duplicated.
 
 Two solution files exist and they are not equivalent:
-- `CovfefeCore.slnx` — references only `Covfefe-core`. Use this for core work.
+- `CovfefeCore.slnx` — references `Covfefe-core` and its test project. Use this for core work.
 - `Covfefe.sln` — references the legacy `Covfefe`, the WiX installer, and `Covfefe-core`.
 
 ## Commands (PowerShell)
@@ -27,9 +27,19 @@ dotnet run   --project src/Covfefe-core/Covfefe-core.csproj -- --ShowSettings  #
 
 # Build the core-only solution
 dotnet build CovfefeCore.slnx
+
+# Run the tests
+dotnet test --solution CovfefeCore.slnx
+dotnet test --project tests/Covfefe-core.Tests/Covfefe-core.Tests.csproj  # just the test project
 ```
 
-There are **no tests** in this repo (no test project, no test runner) despite the interface-based design — do not assume a `dotnet test` target exists.
+Tests are **TUnit**, in `tests/Covfefe-core.Tests/`, covering the core project only. TUnit runs on
+Microsoft.Testing.Platform rather than VSTest, so `global.json` at the repo root opts `dotnet test`
+into the newer command. Two consequences: a project path must go through **`--project`** rather than
+a bare positional argument (and runner flags go after a `--`), and a bare `dotnet test` at the root
+fails on the two solution files, so name `CovfefeCore.slnx`. Read `docs/agents/testing.md` before
+writing tests; it carries the convention for isolating tests that touch the real registry or
+filesystem.
 
 The WiX installer (`src/CovfefeSetup/CovfefeSetup.wixproj`) packages the **legacy** `src/Covfefe/bin/Release/Covfefe.exe`, not the core build, and builds x86. It requires the WiX toolset and MSBuild (not `dotnet build`).
 
@@ -47,7 +57,7 @@ Program.cs
 
 Key patterns:
 - **Facade → Engine layering isolates Win32 volatility.** `SleepManagementFacade` is the app-facing API; the `IPowerManagementEngine` implementation holds the actual P/Invoke calls. The engine is deliberately named for an OS generation (`Windows7PowerManagementEngine`) so a different OS strategy can be swapped behind the interface. Put new native power behavior in an engine, not in the facade or the form.
-- **Interfaces in `Contracts/`** exist for this seam (and testability), even though no tests consume them yet.
+- **Interfaces in `Contracts/`** exist for this seam and for testability — `SleepManagementFacadeTests` drives `SleepManagementFacade` through a stand-in `IPowerManagementEngine`.
 - **P/Invoke lives only in `ApiImports/`** (`WindowsPowerManagementApi`, `WindowsUIApi`). Keep new `DllImport`s there.
 - **Settings persistence is split** (`SettingsFacade`): most settings use the generated .NET `Settings.Default` (`Settings.settings`), but **Start-at-login is the Windows Run registry key** (`HKCU\...\CurrentVersion\Run`), read/written directly. `GetSettings()` swallows any load failure and resets to defaults rather than crashing.
 - **Sleep modes** (`CovfefeSleepMode`: `Normal`, `StayAwake`, `MonitorsOn`) drive everything in `TrayForm.SetSleepMode` — tray icon, balloon tip, the "did you forget?" reminder timer, and the optional double-click toggle. `[Description]` attributes on the enum are the combo-box display text, surfaced via `ControlExtensions.LoadFromEnum`.
@@ -67,6 +77,12 @@ Gitea issues on the self-hosted instance at `http://vault.local:3000` (`jmarsch/
 ### Triage labels
 
 The five canonical roles, label strings unchanged. See `docs/agents/triage-labels.md`.
+
+### Testing
+
+TUnit on Microsoft.Testing.Platform, in `tests/Covfefe-core.Tests/`. Tests that touch the real
+registry or filesystem take a uniquely-named scratch location per test rather than running serially.
+See `docs/agents/testing.md`.
 
 ### Domain docs
 

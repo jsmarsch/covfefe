@@ -63,7 +63,6 @@ Key patterns:
 
 ## Gotchas
 
-- `.vscode/launch.json` points at a stale `bin/Debug/net7.0-windows/Covfefe-core.dll` path; the project now targets **net10.0-windows**. Update the path before using F5 debugging.
 - Several `ISleepManagementFacade` members (`DelaySleepOnBatteryStateChange`, `DelaySleepOnLidClose`) are declared but `throw new NotImplementedException()`.
 
 ## Agent skills

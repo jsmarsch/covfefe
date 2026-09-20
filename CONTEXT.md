@@ -55,3 +55,11 @@ _Avoid_: standalone build, xcopy build
 **Portable**:
 Free of an *install step* — nothing to run, nothing to elevate. It does **not** mean free of a local footprint: the portable track still keeps its settings in `%LOCALAPPDATA%` like the installer track, and it is not designed to run from removable media leaving nothing behind. If that second meaning is ever wanted, it needs its own name.
 _Avoid_: using "portable" for removable-media or zero-footprint behaviour
+
+### Versions
+
+**Covfefe v2**:
+The .NET Framework application that the current .NET line replaced — a separate codebase, not an earlier state of the current one. It is frozen and no longer present in the repo, archived at tag `2.3.41-final`. See ADR-0007.
+_Avoid_: legacy, the old project, the Framework version
+
+Note that **legacy** is already spoken for: *Legacy power API* is the `SetThreadExecutionState` path, which the current application still contains and deliberately keeps. Using "legacy" for v2 as well would make the word mean both a thing that was removed and a thing that was retained.

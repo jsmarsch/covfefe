@@ -1,7 +1,7 @@
 # Testing
 
-Tests live in **`tests/Covfefe-core.Tests/`** and cover the active core project
-(`src/Covfefe-core/`). The legacy .NET Framework project has no tests and is not getting any.
+Tests live in **`tests/Covfefe-core.Tests/`** and cover the core project (`src/Covfefe-core/`),
+which is the only application project in the repo.
 
 | Thing     | Value                                                         |
 | --------- | ------------------------------------------------------------- |
@@ -13,16 +13,17 @@ Tests live in **`tests/Covfefe-core.Tests/`** and cover the active core project
 ## Running them
 
 ```powershell
+dotnet test
 dotnet test --solution CovfefeCore.slnx
 dotnet test --project tests/Covfefe-core.Tests/Covfefe-core.Tests.csproj
 dotnet test --project tests/Covfefe-core.Tests/Covfefe-core.Tests.csproj -- --treenode-filter "/*/*/ScratchIsolationTests/*"
 ```
 
-Two things about that command line, both easy to trip over.
+A bare `dotnet test` at the repo root works: `CovfefeCore.slnx` is the only solution file there, so
+there is nothing to disambiguate. It used to fail with _"Found more than one solution file"_ when
+`Covfefe.sln` sat beside it; that solution is gone.
 
-**The target must be named.** A bare `dotnet test` at the repo root fails with _"Found more than one
-solution file"_, because `Covfefe.sln` and `CovfefeCore.slnx` both live there. Name
-`CovfefeCore.slnx` — `Covfefe.sln` drags in the .NET Framework project and the WiX installer.
+One thing about the command line is still easy to trip over.
 
 **The flag is `--project`, not a positional path.** TUnit runs on Microsoft.Testing.Platform, and
 `dotnet test` on the .NET 10 SDK refuses the old VSTest bridge outright, so `global.json` at the

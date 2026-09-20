@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Covfefe.sln",
+                "${workspaceFolder}/CovfefeCore.slnx",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Covfefe.sln",
+                "${workspaceFolder}/src/Covfefe-core/Covfefe-core.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Covfefe.sln"
+                "${workspaceFolder}/src/Covfefe-core/Covfefe-core.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

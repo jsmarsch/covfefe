@@ -22,13 +22,11 @@ If any of these files don't exist, **proceed silently**. Don't flag their absenc
 │   │   └── 0002-another-decision.md
 │   └── agents/          ← this directory: skill configuration
 └── src/
-    ├── Covfefe-core/    ← active project
-    └── Covfefe/         ← legacy .NET Framework project
+    └── Covfefe-core/    ← the application
 ```
 
-ADRs live at the repo root rather than under `src/<project>/`, because the two projects in `src/` are
-the same application twice (a .NET Framework original and its .NET 10 migration target) and decisions
-almost always span both. If a decision genuinely applies to only one project, say so in the ADR body.
+ADRs live at the repo root rather than under `src/<project>/`: there is a single application project,
+so a per-project directory would buy nothing.
 
 Should this repo ever grow into a genuine multi-context layout, the signal is a `CONTEXT-MAP.md` at
 the root pointing at one `CONTEXT.md` per context, with context-scoped `docs/adr/` directories

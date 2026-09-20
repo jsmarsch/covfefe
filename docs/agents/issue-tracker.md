@@ -1,12 +1,12 @@
 # Issue tracker: Gitea (self-hosted)
 
 Issues and specs for this repo live as **Gitea issues** on the self-hosted instance at
-`http://vault.local:3000`, repo **`jmarsch/Covfefe`**. Use the [`tea`](https://gitea.com/gitea/tea)
+`https://gitea.vault.local`, repo **`jmarsch/Covfefe`**. Use the [`tea`](https://gitea.com/gitea/tea)
 CLI for all operations; drop to the REST API (`/api/v1`) only for what `tea` doesn't cover.
 
 | Thing      | Value                                                         |
 | ---------- | ------------------------------------------------------------- |
-| Instance   | `http://vault.local:3000` (Gitea 1.27.1)                      |
+| Instance   | `https://gitea.vault.local` (Gitea 1.27.1)                      |
 | Repo       | `jmarsch/Covfefe`                                             |
 | Git remote | `nas` — **`origin` is a GitHub mirror, not the tracker**      |
 | CLI        | `tea` 0.11.1, login `jmarsch` (authenticated, set as default) |
@@ -102,7 +102,7 @@ at call time and never print it:
 $token = [regex]::Match((Get-Content "$env:LOCALAPPDATA\tea\config.yml" -Raw),
                         '(?m)^\s*token:\s*(\S+)').Groups[1].Value
 $H   = @{ Authorization = "token $token" }
-$API = "http://vault.local:3000/api/v1/repos/jmarsch/Covfefe"
+$API = "https://gitea.vault.local/api/v1/repos/jmarsch/Covfefe"
 ```
 
 ## Wayfinding operations

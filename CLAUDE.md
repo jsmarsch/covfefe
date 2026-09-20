@@ -72,7 +72,7 @@ Key patterns:
 
 ### Issue tracker
 
-Gitea issues on the self-hosted instance at `http://vault.local:3000` (`jmarsch/Covfefe`), driven by the `tea` CLI — always with `--remote nas`, since `origin` is a GitHub mirror. See `docs/agents/issue-tracker.md`.
+Gitea issues on the self-hosted instance at `https://gitea.vault.local` (`jmarsch/Covfefe`), driven by the `tea` CLI — always with `--remote nas`, since `origin` is a GitHub mirror. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

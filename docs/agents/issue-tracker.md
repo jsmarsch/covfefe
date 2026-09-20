@@ -59,6 +59,40 @@ Create a Gitea issue with `tea issues create --remote nas`.
 
 Run `tea issues <index> --remote nas --comments`.
 
+## Multi-line bodies and UTF-8
+
+**On PowerShell 7 this is a non-issue** — verified 2026-09-20 publishing seven ticket bodies through
+the REST API with no special handling beyond reading the file as UTF-8. The rest of this section
+applies to **Windows PowerShell 5.1**, which is still what `powershell.exe` launches. The safe
+pattern below costs nothing on either version, so keep using it.
+
+`--description` takes one string, and Windows PowerShell 5.1 corrupts it in two separate ways if the
+text is read with `Get-Content`. Both fail silently — the issue is created, with broken content.
+
+- **Encoding.** `Get-Content -Raw` defaults to ANSI, so a UTF-8 file with no BOM arrives mangled
+  (an em dash becomes `â€”`).
+- **Note properties.** `Get-Content` decorates the returned string with `PSPath` / `PSProvider`
+  note properties. `ConvertTo-Json` then emits `{"value":…,"Length":…}` instead of a string, and
+  `JavaScriptSerializer` throws a circular-reference error on `RuntimeModule`.
+
+Read through .NET instead, which avoids both:
+
+```powershell
+$body = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+```
+
+When posting through the REST API, serialize and send as explicit UTF-8 bytes:
+
+```powershell
+$payload = @{ body = $body } | ConvertTo-Json -Compress
+$bytes   = [System.Text.Encoding]::UTF8.GetBytes($payload)
+Invoke-RestMethod -Method Patch -Uri "$API/issues/<n>" -Headers $H `
+  -ContentType "application/json; charset=utf-8" -Body $bytes
+```
+
+Verify afterwards by reading the issue back and counting em dashes (`[char]0x2014`) against the
+source file. A count of zero where the source has many means the body was mangled.
+
 ## REST API fallback
 
 `tea` does not expose issue dependencies. Call the API directly; read the token from `tea`'s config

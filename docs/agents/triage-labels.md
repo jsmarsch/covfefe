@@ -16,6 +16,6 @@ Edit the right-hand column to match whatever vocabulary you actually use.
 
 ## Note for this repo
 
-None of these labels exist in the Gitea repo yet. Create a missing one on first use with
+Only `ready-for-agent` exists in the Gitea repo so far. Create a missing one on first use with
 `tea labels create --remote nas --name "<label>" --color "<hex>"` — see `issue-tracker.md` for why
 `--remote nas` is mandatory.
